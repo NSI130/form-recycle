@@ -1,36 +1,156 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Upload Kreasi - REBLOOM</title>
   <style>
-    body { font-family: sans-serif; background: transparent; padding: 10px; color: #333; margin: 0; }
-    label { font-size: 13px; font-weight: bold; display: block; margin-top: 8px; }
-    input, textarea { width: 100%; padding: 8px; margin: 4px 0 10px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 13px; }
-    button { background: #000; color: #fff; padding: 10px; border: none; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; font-size: 14px; }
-    button:hover { background: #333; }
-    .loading { display: none; text-align: center; font-style: italic; color: #666; font-size: 13px; }
+    /* Styling Dasar & Font */
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+
+    body {
+      font-family: 'DM Sans', sans-serif; /* Font modern yang rapi */
+      background-color: transparent; /* Biar nyatu sama background krem/hijau Canva */
+      padding: 20px 10px;
+      color: #1a202c;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Container Form - Gaya Kotak Retro/Playful */
+    form {
+      background: #FDF9F1; /* Warna krem pastel sesuai web Canva */
+      padding: 30px;
+      border: 2px solid #1c1c1c; /* Garis hitam tegas ala desain REBLOOM */
+      border-radius: 16px;
+      box-shadow: 6px 6px 0px #1c1c1c; /* Shadow padat khas retro playful */
+      width: 100%;
+      max-width: 420px;
+      box-sizing: border-box;
+    }
+
+    /* Judul Form di Dalam */
+    h3 {
+      font-family: 'Playfair Display', serif; /* Font Serif elegan kayak judul web */
+      font-size: 24px;
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #2b3929; /* Hijau tua */
+    }
+
+    /* Label Form */
+    label {
+      font-size: 13px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 8px;
+      color: #1c1c1c;
+      text-transform: uppercase; /* Bikin kesan tegas */
+      letter-spacing: 0.5px;
+    }
+
+    /* Input Teks & Textarea */
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      border: 2px solid #1c1c1c;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      background-color: #ffffff;
+      transition: all 0.2s ease;
+    }
+
+    /* Efek saat kolom diklik (Focus) */
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      background-color: #F0F6E9; /* Background berubah hijau muda */
+      box-shadow: 3px 3px 0px #1c1c1c; /* Shadow muncul saat ngetik */
+    }
+
+    /* Input File (Upload Foto) */
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      background: #ffffff;
+      border: 2px dashed #1c1c1c;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* Tombol Kirim */
+    button {
+      background: #1c1c1c; /* Hitam solid sesuai tombol di web lu */
+      color: #FDF9F1;
+      padding: 14px;
+      border: 2px solid #1c1c1c;
+      border-radius: 30px; /* Bentuk kapsul persis tombol "Explore Gallery" */
+      cursor: pointer;
+      width: 100%;
+      font-weight: 700;
+      font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      background: #E8B4B8; /* Pink pastel pas di-hover (sesuai tombol pink) */
+      color: #1c1c1c;
+      box-shadow: 4px 4px 0px #1c1c1c;
+      transform: translate(-2px, -2px);
+    }
+
+    button:active {
+      box-shadow: 0px 0px 0px #1c1c1c;
+      transform: translate(2px, 2px);
+    }
+
+    /* Teks Loading */
+    .loading {
+      display: none;
+      text-align: center;
+      font-weight: 500;
+      color: #1c1c1c;
+      font-size: 14px;
+      margin-top: 15px;
+      background: #E8B4B8;
+      padding: 10px;
+      border: 2px solid #1c1c1c;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
 
   <form id="myForm">
-    <label>Nama Pembuat</label>
-    <input type="text" name="nama" placeholder="Nama Anda" required>
+    <h3>Upload Your Creation</h3>
+    
+    <label>✦ Nama Pembuat</label>
+    <input type="text" name="nama" placeholder="Masukkan nama kamu..." required>
 
-    <label>Judul Kreasi</label>
-    <input type="text" name="judul" placeholder="Apa yang Anda buat?" required>
+    <label>✦ Judul Kreasi</label>
+    <input type="text" name="judul" placeholder="Contoh: Lampu Hias Botol Bekas" required>
 
-    <label>Bahan yang Digunakan</label>
-    <input type="text" name="bahan" placeholder="Botol bekas, kardus..." required>
+    <label>✦ Bahan yang Digunakan</label>
+    <input type="text" name="bahan" placeholder="Botol plastik, kardus..." required>
 
-    <label>Cerita di Balik Kreasimu</label>
-    <textarea name="cerita" rows="2" placeholder="Ceritakan kreasimu..." required></textarea>
+    <label>✦ Cerita di Balik Kreasimu</label>
+    <textarea name="cerita" rows="3" placeholder="Ceritakan proses pembuatannya..." required></textarea>
 
-    <label>Pilih Foto (Maks 10MB)</label>
+    <label>✦ Pilih Foto (Maks 10MB)</label>
     <input type="file" name="foto" accept="image/*" required>
 
     <button type="submit" id="submitBtn">Kirim Kreasi Saya</button>
-    <p class="loading" id="loadingText">Sedang mengunggah foto & data...</p>
+    <p class="loading" id="loadingText">⏳ Sedang mengunggah karya...</p>
   </form>
 
   <script>
@@ -44,13 +164,14 @@
 
       var formData = new FormData(this);
       
-   fetch('https://script.google.com/macros/s/AKfycby3npnyhecrTjVTHhw835ygI5Z5wqsfcbr7XgHi9g3wi714sJ64fXxhhyUe_qI4fvMaXw/exec', {
+      // URL Web App Apps Script lu
+      fetch('https://script.google.com/macros/s/AKfycby3npnyhecrTjVTHhw835ygI5Z5wqsfcbr7XgHi9g3wi714sJ64fXxhhyUe_qI4fvMaXw/exec', {
         method: 'POST',
         body: formData
       })
       .then(response => response.json())
       .then(data => {
-        alert('Yeay! Kreasi berhasil dikirim dan tersimpan di Spreadsheet.');
+        alert('Yeay! Kreasi berhasil dikirim dan tersimpan di Galeri REBLOOM.');
         document.getElementById('myForm').reset();
         btn.style.display = 'block';
         loading.style.display = 'none';
