@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Form Upload Kreasi - REBLOOM</title>
   <style>
-    /* Styling Dasar & Font */
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
 
     body {
-      font-family: 'DM Sans', sans-serif; /* Font modern yang rapi */
-      background-color: transparent; /* Biar nyatu sama background krem/hijau Canva */
+      font-family: 'DM Sans', sans-serif;
+      background-color: transparent;
       padding: 20px 10px;
       color: #1a202c;
       margin: 0;
@@ -18,40 +17,36 @@
       justify-content: center;
     }
 
-    /* Container Form - Gaya Kotak Retro/Playful */
     form {
-      background: #FDF9F1; /* Warna krem pastel sesuai web Canva */
+      background: #FDF9F1;
       padding: 30px;
-      border: 2px solid #1c1c1c; /* Garis hitam tegas ala desain REBLOOM */
+      border: 2px solid #1c1c1c;
       border-radius: 16px;
-      box-shadow: 6px 6px 0px #1c1c1c; /* Shadow padat khas retro playful */
+      box-shadow: 6px 6px 0px #1c1c1c;
       width: 100%;
       max-width: 420px;
       box-sizing: border-box;
     }
 
-    /* Judul Form di Dalam */
     h3 {
-      font-family: 'Playfair Display', serif; /* Font Serif elegan kayak judul web */
+      font-family: 'Playfair Display', serif;
       font-size: 24px;
       margin-top: 0;
       margin-bottom: 20px;
       text-align: center;
-      color: #2b3929; /* Hijau tua */
+      color: #2b3929;
     }
 
-    /* Label Form */
     label {
       font-size: 13px;
       font-weight: 700;
       display: block;
       margin-bottom: 8px;
       color: #1c1c1c;
-      text-transform: uppercase; /* Bikin kesan tegas */
+      text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
-    /* Input Teks & Textarea */
     input[type="text"],
     textarea {
       width: 100%;
@@ -66,15 +61,13 @@
       transition: all 0.2s ease;
     }
 
-    /* Efek saat kolom diklik (Focus) */
     input[type="text"]:focus,
     textarea:focus {
       outline: none;
-      background-color: #F0F6E9; /* Background berubah hijau muda */
-      box-shadow: 3px 3px 0px #1c1c1c; /* Shadow muncul saat ngetik */
+      background-color: #F0F6E9;
+      box-shadow: 3px 3px 0px #1c1c1c;
     }
 
-    /* Input File (Upload Foto) */
     input[type="file"] {
       width: 100%;
       padding: 10px;
@@ -87,13 +80,12 @@
       font-family: 'DM Sans', sans-serif;
     }
 
-    /* Tombol Kirim */
     button {
-      background: #1c1c1c; /* Hitam solid sesuai tombol di web lu */
+      background: #1c1c1c;
       color: #FDF9F1;
       padding: 14px;
       border: 2px solid #1c1c1c;
-      border-radius: 30px; /* Bentuk kapsul persis tombol "Explore Gallery" */
+      border-radius: 30px;
       cursor: pointer;
       width: 100%;
       font-weight: 700;
@@ -103,7 +95,7 @@
     }
 
     button:hover {
-      background: #E8B4B8; /* Pink pastel pas di-hover (sesuai tombol pink) */
+      background: #E8B4B8;
       color: #1c1c1c;
       box-shadow: 4px 4px 0px #1c1c1c;
       transform: translate(-2px, -2px);
@@ -114,7 +106,6 @@
       transform: translate(2px, 2px);
     }
 
-    /* Teks Loading */
     .loading {
       display: none;
       text-align: center;
@@ -158,30 +149,51 @@
       e.preventDefault();
       var btn = document.getElementById('submitBtn');
       var loading = document.getElementById('loadingText');
+      var form = this;
       
       btn.style.display = 'none';
       loading.style.display = 'block';
 
-      var formData = new FormData(this);
-      
-      // URL Web App Apps Script lu
-      fetch('https://script.google.com/macros/s/AKfycby3npnyhecrTjVTHhw835ygI5Z5wqsfcbr7XgHi9g3wi714sJ64fXxhhyUe_qI4fvMaXw/exec', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        alert('Yeay! Kreasi berhasil dikirim dan tersimpan di Galeri REBLOOM.');
-        document.getElementById('myForm').reset();
-        btn.style.display = 'block';
-        loading.style.display = 'none';
-      })
-      .catch(error => {
-        alert('Terjadi kesalahan, silahkan coba lagi.');
-        console.error('Error:', error);
-        btn.style.display = 'block';
-        loading.style.display = 'none';
-      });
+      var fileInput = form.querySelector('input[type="file"]');
+      var file = fileInput.files[0];
+
+      var reader = new FileReader();
+      reader.onload = function(event) {
+        var base64Data = event.target.result.split(',')[1];
+        
+        var params = new URLSearchParams();
+        params.append('nama', form.nama.value);
+        params.append('judul', form.judul.value);
+        params.append('bahan', form.bahan.value);
+        params.append('cerita', form.cerita.value);
+        params.append('fileData', base64Data);
+        params.append('fileName', file.name);
+        params.append('mimeType', file.type);
+
+        fetch('https://script.google.com/macros/s/AKfycby3npnyhecrTjVTHhw835ygI5Z5wqsfcbr7XgHi9g3wi714sJ64fXxhhyUe_qI4fvMaXw/exec', {
+          method: 'POST',
+          body: params
+        })
+        .then(response => response.json())
+        .then(data => {
+          if(data.result === 'success') {
+            alert('Yeay! Kreasi berhasil dikirim dan tersimpan di Galeri REBLOOM.');
+            form.reset();
+          } else {
+            alert('Gagal dari server: ' + data.message);
+          }
+          btn.style.display = 'block';
+          loading.style.display = 'none';
+        })
+        .catch(error => {
+          alert('Terjadi kesalahan koneksi, silahkan coba lagi.');
+          console.error('Error:', error);
+          btn.style.display = 'block';
+          loading.style.display = 'none';
+        });
+      };
+
+      reader.readAsDataURL(file);
     });
   </script>
 
