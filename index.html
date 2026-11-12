@@ -13,7 +13,7 @@
 
     body {
       font-family: 'DM Sans', sans-serif;
-      background-color: #EBF3E3; /* Hijau sage lembut persis background REBLOOM */
+      background-color: #EBF3E3;
       background-image: radial-gradient(#d5e3c8 1px, transparent 1px);
       background-size: 24px 24px;
       color: #263B29;
@@ -25,33 +25,35 @@
       align-items: center;
     }
 
-    /* Top Bar ala Header REBLOOM */
+    /* Top Bar ala Header REBLOOM (Logo Kiri, Penyemangat Kanan) */
     .top-bar {
       width: 100%;
       background-color: #FDF9F1;
-      padding: 14px 24px;
+      padding: 14px 40px;
       border-bottom: 1px solid rgba(38, 59, 41, 0.08);
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 32px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .brand-icon {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       background-color: #D9E8CD;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
       color: #263B29;
     }
 
@@ -64,14 +66,57 @@
     .brand-title {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 800;
-      font-size: 15px;
+      font-size: 16px;
       letter-spacing: 0.5px;
       color: #263B29;
     }
 
     .brand-sub {
-      font-size: 10px;
+      font-size: 11px;
       color: #6B7C6E;
+    }
+
+    /* Bagian Kanan Header: Kata-kata Penyemangat */
+    .header-quotes {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .quote-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: #4A5D4D;
+    }
+
+    .quote-pill {
+      background-color: #FADCE4; /* Pink pastel persis tombol "Create a ZIP" di header kamu */
+      color: #263B29;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.2px;
+    }
+
+    /* Responsif untuk layar HP */
+    @media (max-width: 680px) {
+      .top-bar {
+        padding: 14px 20px;
+        justify-content: center;
+        text-align: center;
+      }
+      .header-quotes {
+        justify-content: center;
+      }
+      .quote-text {
+        display: none; /* Di HP tampilkan pill penyemangatnya saja biar ringkas */
+      }
     }
 
     /* Wrapper Utama */
@@ -92,7 +137,6 @@
       position: relative;
     }
 
-    /* Dekorasi Bintang ala Web REBLOOM */
     .sparkle {
       position: absolute;
       top: 22px;
@@ -102,7 +146,6 @@
       opacity: 0.7;
     }
 
-    /* Pill Badge Kuning Pastel */
     .badge {
       display: inline-block;
       background-color: #FDE28A;
@@ -133,7 +176,6 @@
       line-height: 1.5;
     }
 
-    /* Label & Tag */
     .field-group {
       margin-bottom: 18px;
     }
@@ -154,7 +196,6 @@
       font-size: 14px;
     }
 
-    /* Input Teks & Textarea */
     input[type="text"],
     textarea {
       width: 100%;
@@ -186,10 +227,8 @@
       min-height: 90px;
     }
 
-    /* Area Upload Foto Custom */
     .file-upload-box {
       position: relative;
-      background-color: #FADCE4; /* Pink pastel kartu REBLOOM */
       background-color: rgba(250, 220, 228, 0.35);
       border: 1.5px dashed #263B29;
       border-radius: 16px;
@@ -247,7 +286,6 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
-    /* Tombol Kapsul Hijau Tua ala REBLOOM */
     button {
       background-color: #263B29;
       color: #FDF9F1;
@@ -278,7 +316,6 @@
       transform: translateY(0);
     }
 
-    /* Status Loading */
     .loading {
       display: none;
       text-align: center;
@@ -291,7 +328,6 @@
       border-radius: 999px;
     }
 
-    /* Footer Tag Kecil */
     .footer-pill {
       margin-top: 18px;
       text-align: center;
@@ -310,7 +346,7 @@
 </head>
 <body>
 
-  <div class="top-bar">
+  <header class="top-bar">
     <div class="brand">
       <div class="brand-icon">✿</div>
       <div class="brand-text">
@@ -318,7 +354,13 @@
         <span class="brand-sub">Old Things. New Stories.</span>
       </div>
     </div>
-  </div>
+
+    <div class="header-quotes">
+      <span class="quote-text">Small Waste, Big Creativity!</span>
+      <span class="quote-pill">✦ Every Scrap Tells a Story</span>
+      <span class="quote-text">Let's Make Less Waste Together</span>
+    </div>
+  </header>
 
   <div class="container">
     <form id="myForm">
@@ -370,7 +412,6 @@
   </div>
 
   <script>
-    // Preview foto otomatis saat user memilih gambar
     document.getElementById('fotoInput').addEventListener('change', function(e) {
       var file = e.target.files[0];
       var fileLabel = document.getElementById('fileLabel');
@@ -391,7 +432,6 @@
       }
     });
 
-    // Pengiriman data ke Google Apps Script
     document.getElementById('myForm').addEventListener('submit', function(e) {
       e.preventDefault();
       var btn = document.getElementById('submitBtn');
