@@ -3,148 +3,395 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kirim Kreasi Kamu</title>
+  <title>Kirim Kreasi Kamu — REBLOOM</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       font-family: 'DM Sans', sans-serif;
-      background-color: transparent;
-      padding: 20px 10px;
-      color: #1a202c;
+      background-color: #EBF3E3; /* Hijau sage lembut persis background REBLOOM */
+      background-image: radial-gradient(#d5e3c8 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: #263B29;
       margin: 0;
+      padding: 0 0 48px 0;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
     }
 
+    /* Top Bar ala Header REBLOOM */
+    .top-bar {
+      width: 100%;
+      background-color: #FDF9F1;
+      padding: 14px 24px;
+      border-bottom: 1px solid rgba(38, 59, 41, 0.08);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      background-color: #D9E8CD;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #263B29;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .brand-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+      color: #263B29;
+    }
+
+    .brand-sub {
+      font-size: 10px;
+      color: #6B7C6E;
+    }
+
+    /* Wrapper Utama */
+    .container {
+      width: 100%;
+      max-width: 460px;
+      padding: 0 16px;
+      position: relative;
+    }
+
+    /* Kartu Form Utama */
     form {
       background: #FDF9F1;
-      padding: 30px;
-      border: 2px solid #1c1c1c;
-      border-radius: 16px;
-      box-shadow: 6px 6px 0px #1c1c1c;
-      width: 100%;
-      max-width: 420px;
-      box-sizing: border-box;
+      padding: 32px 28px;
+      border-radius: 24px;
+      box-shadow: 0 14px 35px rgba(38, 59, 41, 0.08);
+      border: 1px solid rgba(38, 59, 41, 0.08);
+      position: relative;
+    }
+
+    /* Dekorasi Bintang ala Web REBLOOM */
+    .sparkle {
+      position: absolute;
+      top: 22px;
+      right: 24px;
+      font-size: 20px;
+      color: #263B29;
+      opacity: 0.7;
+    }
+
+    /* Pill Badge Kuning Pastel */
+    .badge {
+      display: inline-block;
+      background-color: #FDE28A;
+      color: #263B29;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
     }
 
     h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px;
-      margin-top: 0;
-      margin-bottom: 20px;
-      text-align: center;
-      color: #2b3929;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      margin: 0 0 6px 0;
+      color: #263B29;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      font-size: 13.5px;
+      color: #5C6E5E;
+      margin: 0 0 24px 0;
+      line-height: 1.5;
+    }
+
+    /* Label & Tag */
+    .field-group {
+      margin-bottom: 18px;
     }
 
     label {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
-      display: block;
-      margin-bottom: 8px;
-      color: #1c1c1c;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 7px;
+      color: #263B29;
+      letter-spacing: 0.3px;
     }
 
+    label span.dot {
+      color: #E5989B;
+      font-size: 14px;
+    }
+
+    /* Input Teks & Textarea */
     input[type="text"],
     textarea {
       width: 100%;
-      padding: 12px 14px;
-      margin-bottom: 18px;
-      border: 2px solid #1c1c1c;
-      border-radius: 8px;
-      box-sizing: border-box;
+      padding: 13px 16px;
+      border: 1.5px solid #DCE5D5;
+      border-radius: 14px;
       font-size: 14px;
       font-family: 'DM Sans', sans-serif;
-      background-color: #ffffff;
+      color: #263B29;
+      background-color: #FFFFFF;
       transition: all 0.2s ease;
+    }
+
+    input[type="text"]::placeholder,
+    textarea::placeholder {
+      color: #9AA89C;
     }
 
     input[type="text"]:focus,
     textarea:focus {
       outline: none;
-      background-color: #F0F6E9;
-      box-shadow: 3px 3px 0px #1c1c1c;
+      border-color: #263B29;
+      background-color: #F7FBF3;
+      box-shadow: 0 0 0 4px rgba(217, 232, 205, 0.5);
     }
 
-    input[type="file"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 24px;
-      font-size: 13px;
-      background: #ffffff;
-      border: 2px dashed #1c1c1c;
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
+    textarea {
+      resize: vertical;
+      min-height: 90px;
     }
 
-    button {
-      background: #1c1c1c;
-      color: #FDF9F1;
-      padding: 14px;
-      border: 2px solid #1c1c1c;
-      border-radius: 30px;
+    /* Area Upload Foto Custom */
+    .file-upload-box {
+      position: relative;
+      background-color: #FADCE4; /* Pink pastel kartu REBLOOM */
+      background-color: rgba(250, 220, 228, 0.35);
+      border: 1.5px dashed #263B29;
+      border-radius: 16px;
+      padding: 18px 16px;
+      text-align: center;
       cursor: pointer;
-      width: 100%;
-      font-weight: 700;
-      font-size: 15px;
-      font-family: 'DM Sans', sans-serif;
       transition: all 0.2s ease;
+      margin-bottom: 24px;
+    }
+
+    .file-upload-box:hover {
+      background-color: rgba(250, 220, 228, 0.65);
+    }
+
+    .file-upload-box input[type="file"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .upload-icon {
+      font-size: 22px;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .upload-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: #263B29;
+      display: block;
+    }
+
+    .upload-hint {
+      font-size: 11.5px;
+      color: #5C6E5E;
+      display: block;
+      margin-top: 2px;
+    }
+
+    #previewContainer {
+      display: none;
+      margin-top: 12px;
+    }
+
+    #previewImg {
+      max-width: 100%;
+      max-height: 160px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Tombol Kapsul Hijau Tua ala REBLOOM */
+    button {
+      background-color: #263B29;
+      color: #FDF9F1;
+      padding: 15px 24px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      width: 100%;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 14.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 16px rgba(38, 59, 41, 0.18);
     }
 
     button:hover {
-      background: #E8B4B8;
-      color: #1c1c1c;
-      box-shadow: 4px 4px 0px #1c1c1c;
-      transform: translate(-2px, -2px);
+      background-color: #FADCE4;
+      color: #263B29;
+      box-shadow: inset 0 0 0 1.5px #263B29, 0 6px 16px rgba(38, 59, 41, 0.12);
+      transform: translateY(-2px);
     }
 
     button:active {
-      box-shadow: 0px 0px 0px #1c1c1c;
-      transform: translate(2px, 2px);
+      transform: translateY(0);
     }
 
+    /* Status Loading */
     .loading {
       display: none;
       text-align: center;
-      font-weight: 500;
-      color: #1c1c1c;
-      font-size: 14px;
-      margin-top: 15px;
-      background: #E8B4B8;
-      padding: 10px;
-      border: 2px solid #1c1c1c;
-      border-radius: 8px;
+      font-weight: 700;
+      color: #263B29;
+      font-size: 13.5px;
+      margin-top: 14px;
+      background-color: #FDE28A;
+      padding: 13px 16px;
+      border-radius: 999px;
+    }
+
+    /* Footer Tag Kecil */
+    .footer-pill {
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    .footer-pill span {
+      display: inline-block;
+      background-color: #F4B89B;
+      color: #263B29;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 999px;
     }
   </style>
 </head>
 <body>
 
-  <form id="myForm">
-    <h3>Upload Your Creation</h3>
-    
-    <label>✦ Nama Pembuat</label>
-    <input type="text" name="nama" placeholder="Masukkan nama kamu..." required>
+  <div class="top-bar">
+    <div class="brand">
+      <div class="brand-icon">✿</div>
+      <div class="brand-text">
+        <span class="brand-title">REBLOOM</span>
+        <span class="brand-sub">Old Things. New Stories.</span>
+      </div>
+    </div>
+  </div>
 
-    <label>✦ Judul Kreasi</label>
-    <input type="text" name="judul" placeholder="Contoh: Gantungan Kunci..." required>
+  <div class="container">
+    <form id="myForm">
+      <span class="sparkle">✳</span>
+      <div class="badge">✦ Make Something Magical ✦</div>
+      <h3>Share Your Creation</h3>
+      <p class="subtitle">Ubah barang bekas jadi karya bermakna. Bagikan hasil kreasimu ke galeri REBLOOM!</p>
 
-    <label>✦ Bahan yang kamu gunakan</label>
-    <input type="text" name="bahan" placeholder="Botol plastik, kardus..." required>
+      <div class="field-group">
+        <label><span class="dot">✦</span> Nama Pembuat</label>
+        <input type="text" name="nama" placeholder="Masukkan nama kamu..." required>
+      </div>
 
-    <label>✦ Cerita di Balik Karyamu</label>
-    <textarea name="cerita" rows="3" placeholder="Ceritakan proses pembuatannya ya aku penasaran..." required></textarea>
+      <div class="field-group">
+        <label><span class="dot">✦</span> Judul Kreasi</label>
+        <input type="text" name="judul" placeholder="Contoh: Gantungan Kunci 3D Print..." required>
+      </div>
 
-    <label>✦ Pilih Foto (Maks 10MB)</label>
-    <input type="file" name="foto" accept="image/*" required>
+      <div class="field-group">
+        <label><span class="dot">✦</span> Bahan yang Kamu Gunakan</label>
+        <input type="text" name="bahan" placeholder="Botol plastik, kardus, kain flanel..." required>
+      </div>
 
-    <button type="submit" id="submitBtn">Kirim Karyamu</button>
-    <p class="loading" id="loadingText">⏳ Sedang mengunggah karya......</p>
-  </form>
+      <div class="field-group">
+        <label><span class="dot">✦</span> Cerita di Balik Karyamu</label>
+        <textarea name="cerita" rows="3" placeholder="Ceritakan proses pembuatannya ya aku penasaran..." required></textarea>
+      </div>
+
+      <div class="field-group" style="margin-bottom: 0;">
+        <label><span class="dot">✦</span> Foto Hasil Kreasi (Maks 10MB)</label>
+        <div class="file-upload-box">
+          <input type="file" name="foto" id="fotoInput" accept="image/*" required>
+          <span class="upload-icon">📸</span>
+          <span class="upload-text" id="fileLabel">Klik untuk pilih foto karyamu</span>
+          <span class="upload-hint">Format JPG, PNG, atau WEBP</span>
+          <div id="previewContainer">
+            <img id="previewImg" src="" alt="Preview Foto">
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" id="submitBtn">Kirim Karyamu <span>→</span></button>
+      <p class="loading" id="loadingText">⏳ Sedang mengunggah karya ke galeri...</p>
+    </form>
+
+    <div class="footer-pill">
+      <span>from waste to wellness</span>
+    </div>
+  </div>
 
   <script>
+    // Preview foto otomatis saat user memilih gambar
+    document.getElementById('fotoInput').addEventListener('change', function(e) {
+      var file = e.target.files[0];
+      var fileLabel = document.getElementById('fileLabel');
+      var previewContainer = document.getElementById('previewContainer');
+      var previewImg = document.getElementById('previewImg');
+
+      if (file) {
+        fileLabel.textContent = file.name;
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+          previewImg.src = ev.target.result;
+          previewContainer.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        fileLabel.textContent = 'Klik untuk pilih foto karyamu';
+        previewContainer.style.display = 'none';
+      }
+    });
+
+    // Pengiriman data ke Google Apps Script
     document.getElementById('myForm').addEventListener('submit', function(e) {
       e.preventDefault();
       var btn = document.getElementById('submitBtn');
@@ -179,16 +426,18 @@
           if(data.result === 'success') {
             alert('Yeay! Kreasi berhasil dikirim dan tersimpan di Galeri REBLOOM.');
             form.reset();
+            document.getElementById('fileLabel').textContent = 'Klik untuk pilih foto karyamu';
+            document.getElementById('previewContainer').style.display = 'none';
           } else {
             alert('Gagal dari server: ' + data.message);
           }
-          btn.style.display = 'block';
+          btn.style.display = 'flex';
           loading.style.display = 'none';
         })
         .catch(error => {
           alert('Terjadi kesalahan koneksi, silahkan coba lagi.');
           console.error('Error:', error);
-          btn.style.display = 'block';
+          btn.style.display = 'flex';
           loading.style.display = 'none';
         });
       };
