@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: sans-serif; background: transparent; padding: 10px; color: #333; margin: 0; }
+    label { font-size: 13px; font-weight: bold; display: block; margin-top: 8px; }
+    input, textarea { width: 100%; padding: 8px; margin: 4px 0 10px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 13px; }
+    button { background: #000; color: #fff; padding: 10px; border: none; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; font-size: 14px; }
+    button:hover { background: #333; }
+    .loading { display: none; text-align: center; font-style: italic; color: #666; font-size: 13px; }
+  </style>
+</head>
+<body>
+
+  <form id="myForm">
+    <label>Nama Pembuat</label>
+    <input type="text" name="nama" placeholder="Nama Anda" required>
+
+    <label>Judul Kreasi</label>
+    <input type="text" name="judul" placeholder="Apa yang Anda buat?" required>
+
+    <label>Bahan yang Digunakan</label>
+    <input type="text" name="bahan" placeholder="Botol bekas, kardus..." required>
+
+    <label>Cerita di Balik Kreasimu</label>
+    <textarea name="cerita" rows="2" placeholder="Ceritakan kreasimu..." required></textarea>
+
+    <label>Pilih Foto (Maks 10MB)</label>
+    <input type="file" name="foto" accept="image/*" required>
+
+    <button type="submit" id="submitBtn">Kirim Kreasi Saya</button>
+    <p class="loading" id="loadingText">Sedang mengunggah foto & data...</p>
+  </form>
+
+  <script>
+    document.getElementById('myForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = document.getElementById('submitBtn');
+      var loading = document.getElementById('loadingText');
+      
+      btn.style.display = 'none';
+      loading.style.display = 'block';
+
+      var formData = new FormData(this);
+      
+   fetch('https://script.google.com/macros/s/AKfycby3npnyhecrTjVTHhw835ygI5Z5wqsfcbr7XgHi9g3wi714sJ64fXxhhyUe_qI4fvMaXw/exec', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Yeay! Kreasi berhasil dikirim dan tersimpan di Spreadsheet.');
+        document.getElementById('myForm').reset();
+        btn.style.display = 'block';
+        loading.style.display = 'none';
+      })
+      .catch(error => {
+        alert('Terjadi kesalahan, silahkan coba lagi.');
+        console.error('Error:', error);
+        btn.style.display = 'block';
+        loading.style.display = 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>
