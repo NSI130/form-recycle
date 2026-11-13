@@ -12,7 +12,7 @@
     body {
       font-family: 'DM Sans', sans-serif;
       background-color: #EBF3E3;
-      background-image: radial-gradient(rgba(38, 59, 41, 0.12) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(38, 59, 41, 0.1) 1px, transparent 1px);
       background-size: 24px 24px;
       color: #263B29;
       margin: 0;
@@ -21,275 +21,182 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: background-color 0.4s ease;
+      transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Mode Sell: Background berubah jadi Kuning Pastel REBLOOM */
     body.mode-sell {
       background-color: #FCE29C;
     }
 
-    /* Header Bar REBLOOM */
+    /* HEADER BAR */
     .top-bar {
       width: 100%;
       background-color: #FDF9F1;
       padding: 14px 40px;
-      border-bottom: 1px solid rgba(38, 59, 41, 0.08);
+      border-bottom: 1px solid rgba(38, 59, 41, 0.06);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 14px;
-      margin-bottom: 28px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
     }
 
-    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 12px; cursor: default; }
     .brand-icon {
-      width: 36px; height: 36px; background-color: #D9E8CD; border-radius: 50%;
+      width: 38px; height: 38px; background-color: #D9E8CD; border-radius: 50%;
       display: flex; align-items: center; justify-content: center; font-size: 18px;
+      transition: transform 0.3s ease;
     }
+    .brand:hover .brand-icon { transform: rotate(15deg) scale(1.05); }
     .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
-    .brand-title { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 16px; }
+    .brand-title { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: -0.2px; }
     .brand-sub { font-size: 11px; color: #6B7C6E; }
 
-    .header-quotes {
-      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-    }
+    .header-quotes { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
     .quote-text { font-size: 13px; font-weight: 500; color: #4A5D4D; }
     .quote-pill {
       background-color: #FADCE4; color: #263B29; font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 12.5px; font-weight: 700; padding: 8px 18px; border-radius: 999px;
     }
 
-    /* TOGGLE PILL SWITCHER (Persis Inspirasi Plans & Pricing!) */
-    .switcher-wrap {
-      margin-bottom: 24px;
-      padding: 0 16px;
-    }
-
+    /* TOGGLE PILL SWITCHER */
+    .switcher-wrap { margin-bottom: 28px; padding: 0 16px; }
     .pill-switcher {
-      background-color: #FDF9F1;
-      padding: 6px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 8px 24px rgba(38, 59, 41, 0.08);
-      border: 1px solid rgba(38, 59, 41, 0.08);
+      background-color: #FDF9F1; padding: 6px; border-radius: 999px; display: inline-flex;
+      align-items: center; gap: 4px; box-shadow: 0 8px 24px rgba(38, 59, 41, 0.08);
+      border: 1px solid rgba(38, 59, 41, 0.06);
     }
 
     .switch-btn {
-      border: none;
-      background: transparent;
-      color: #4A5D4D;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 13.5px;
-      font-weight: 700;
-      padding: 11px 22px;
-      border-radius: 999px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.25s ease;
+      border: none; background: transparent; color: #6B7C6E;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13.5px; font-weight: 700;
+      padding: 12px 24px; border-radius: 999px; cursor: pointer;
+      display: flex; align-items: center; gap: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .switch-btn:hover {
-      color: #263B29;
-    }
-
+    .switch-btn:hover { color: #263B29; background-color: rgba(38, 59, 41, 0.04); }
     .switch-btn.active {
-      background-color: #263B29;
-      color: #FDF9F1;
-      box-shadow: 0 4px 12px rgba(38, 59, 41, 0.2);
+      background-color: #263B29; color: #FDF9F1;
+      box-shadow: 0 4px 12px rgba(38, 59, 41, 0.2); pointer-events: none;
     }
 
-    /* Container Form */
+    /* CONTAINER & FORM CARD */
     .container {
-      width: 100%;
-      max-width: 500px;
-      padding: 0 16px;
-      transition: max-width 0.3s ease;
+      width: 100%; max-width: 500px; padding: 0 16px;
+      transition: max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-    body.mode-sell .container {
-      max-width: 560px;
-    }
+    body.mode-sell .container { max-width: 560px; }
 
     .form-card {
-      background: #FDF9F1;
-      padding: 32px 28px;
-      border-radius: 24px;
-      box-shadow: 0 14px 35px rgba(38, 59, 41, 0.08);
-      border: 1px solid rgba(38, 59, 41, 0.08);
-      position: relative;
-      animation: fadeSlide 0.3s ease;
+      background: #FDF9F1; padding: 34px 30px; border-radius: 24px;
+      box-shadow: 0 14px 40px rgba(38, 59, 41, 0.08);
+      border: 1px solid rgba(38, 59, 41, 0.06);
+      position: relative; animation: slideFadeUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes slideFadeUp {
+      from { opacity: 0; transform: translateY(12px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .hidden { display: none !important; }
 
     .sparkle {
-      position: absolute; top: 22px; right: 24px;
-      font-size: 20px; color: #263B29; opacity: 0.7;
+      position: absolute; top: 22px; right: 24px; font-size: 20px; color: #263B29; opacity: 0.7;
+      animation: spinSlow 6s linear infinite;
     }
+    @keyframes spinSlow { 100% { transform: rotate(360deg); } }
 
     .badge {
-      display: inline-block;
-      background-color: #FDE28A;
-      color: #263B29;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      display: inline-block; background-color: #FDE28A; color: #263B29;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.8px; padding: 6px 14px; border-radius: 999px;
+      text-transform: uppercase; margin-bottom: 14px;
     }
+    .badge.pink { background-color: #FADCE4; }
 
-    .badge.pink {
-      background-color: #FADCE4;
-    }
+    h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 800; margin: 0 0 6px 0; letter-spacing: -0.5px; }
+    .subtitle { font-size: 13.5px; color: #5C6E5E; margin: 0 0 26px 0; line-height: 1.5; }
 
-    h3 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 26px;
-      font-weight: 800;
-      margin: 0 0 6px 0;
-      letter-spacing: -0.5px;
-    }
-
-    .subtitle {
-      font-size: 13.5px;
-      color: #5C6E5E;
-      margin: 0 0 24px 0;
-      line-height: 1.5;
-    }
-
-    .row-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .field-group { margin-bottom: 17px; }
-
-    label {
-      font-size: 12.5px;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 7px;
-      color: #263B29;
-    }
-
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field-group { margin-bottom: 18px; }
+    
+    label { font-size: 12.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 8px; color: #263B29; }
     label span.dot { color: #E5989B; font-size: 14px; }
 
+    /* INPUTS */
     input[type="text"], select, textarea {
-      width: 100%;
-      padding: 12px 15px;
-      border: 1.5px solid #DCE5D5;
-      border-radius: 13px;
-      font-size: 14px;
-      font-family: 'DM Sans', sans-serif;
-      color: #263B29;
-      background-color: #FFFFFF;
-      transition: all 0.2s ease;
+      width: 100%; padding: 13px 16px; border: 1.5px solid #DCE5D5; border-radius: 14px;
+      font-size: 14px; font-family: 'DM Sans', sans-serif; color: #263B29;
+      background-color: #FFFFFF; transition: all 0.25s ease;
     }
-
+    input::placeholder, textarea::placeholder { color: #A4B2A6; }
     input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: #263B29;
-      background-color: #F7FBF3;
-      box-shadow: 0 0 0 4px rgba(217, 232, 205, 0.5);
+      outline: none; border-color: #263B29; background-color: #F7FBF3;
+      box-shadow: 0 0 0 4px rgba(217, 232, 205, 0.6);
     }
+    textarea { resize: vertical; min-height: 90px; }
+    .helper { font-size: 11px; color: #6B7C6E; margin-top: 6px; line-height: 1.4; }
 
-    textarea { resize: vertical; min-height: 88px; }
-
-    .helper {
-      font-size: 11px;
-      color: #6B7C6E;
-      margin-top: 5px;
-      line-height: 1.4;
-    }
-
+    /* UPLOAD BOX */
     .file-upload-box {
-      position: relative;
-      background-color: rgba(250, 220, 228, 0.35);
-      border: 1.5px dashed #263B29;
-      border-radius: 16px;
-      padding: 18px 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      margin-bottom: 22px;
+      position: relative; background-color: rgba(250, 220, 228, 0.35);
+      border: 1.5px dashed #A4B2A6; border-radius: 16px; padding: 20px 16px;
+      text-align: center; cursor: pointer; transition: all 0.3s ease; margin-bottom: 24px;
     }
-
-    .file-upload-box:hover { background-color: rgba(250, 220, 228, 0.65); }
-
-    .file-upload-box input[type="file"] {
-      position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
+    .file-upload-box:hover, .file-upload-box.dragover {
+      background-color: rgba(250, 220, 228, 0.7); border-color: #263B29; transform: translateY(-2px);
     }
-
-    .upload-icon { font-size: 22px; margin-bottom: 4px; display: block; }
-    .upload-text { font-size: 13px; font-weight: 700; display: block; }
-    .upload-hint { font-size: 11.5px; color: #5C6E5E; display: block; margin-top: 2px; }
-
-    .preview-box { display: none; margin-top: 12px; }
+    .file-upload-box input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+    .upload-icon { font-size: 24px; margin-bottom: 6px; display: block; transition: transform 0.3s ease; }
+    .file-upload-box:hover .upload-icon { transform: scale(1.1); }
+    .upload-text { font-size: 13.5px; font-weight: 700; display: block; color: #263B29; }
+    .upload-hint { font-size: 11.5px; color: #6B7C6E; display: block; margin-top: 4px; }
+    .preview-box { display: none; margin-top: 14px; animation: slideFadeUp 0.3s ease; }
     .preview-box img {
-      max-width: 100%; max-height: 155px; border-radius: 12px;
-      object-fit: cover; border: 2px solid #FFFFFF;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      max-width: 100%; max-height: 160px; border-radius: 12px; object-fit: cover;
+      border: 2px solid #FFFFFF; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
     }
 
+    /* SUBMIT BUTTON */
     .submit-btn {
-      background-color: #263B29;
-      color: #FDF9F1;
-      padding: 15px 24px;
-      border: none;
-      border-radius: 999px;
-      cursor: pointer;
-      width: 100%;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 700;
-      font-size: 14.5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.25s ease;
-      box-shadow: 0 6px 16px rgba(38, 59, 41, 0.18);
+      background-color: #263B29; color: #FDF9F1; padding: 16px 24px;
+      border: none; border-radius: 999px; cursor: pointer; width: 100%;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 14.5px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 6px 20px rgba(38, 59, 41, 0.15);
     }
-
     .submit-btn:hover {
-      background-color: #FADCE4;
-      color: #263B29;
-      box-shadow: inset 0 0 0 1.5px #263B29, 0 6px 16px rgba(38, 59, 41, 0.12);
-      transform: translateY(-2px);
+      background-color: #FADCE4; color: #263B29;
+      box-shadow: inset 0 0 0 1.5px #263B29, 0 8px 20px rgba(38, 59, 41, 0.12);
+      transform: translateY(-3px);
     }
+    .submit-btn:active { transform: translateY(0); }
 
+    /* LOADING & FOOTER */
     .loading {
       display: none; text-align: center; font-weight: 700; font-size: 13.5px;
-      margin-top: 14px; background-color: #FDE28A; padding: 13px 16px; border-radius: 999px;
+      margin-top: 14px; background-color: #FDE28A; padding: 14px 16px; border-radius: 999px;
+      animation: pulse 1.5s infinite ease-in-out;
     }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
-    .footer-pill { margin-top: 18px; text-align: center; }
+    .footer-pill { margin-top: 24px; text-align: center; }
     .footer-pill span {
       display: inline-block; background-color: #F4B89B; color: #263B29;
-      font-size: 11px; font-weight: 700; padding: 5px 14px; border-radius: 999px;
+      font-size: 11px; font-weight: 700; padding: 6px 16px; border-radius: 999px;
     }
 
+    /* RESPONSIVE */
     @media (max-width: 680px) {
       .top-bar { padding: 14px 20px; justify-content: center; }
       .quote-text { display: none; }
       .row-2 { grid-template-columns: 1fr; gap: 0; }
       .switch-btn { padding: 10px 16px; font-size: 12.5px; }
+      .form-card { padding: 26px 22px; }
     }
   </style>
 </head>
@@ -303,7 +210,6 @@
         <span class="brand-sub">Old Things. New Stories.</span>
       </div>
     </div>
-
     <div class="header-quotes">
       <span class="quote-text">Small Waste, Big Creativity!</span>
       <span class="quote-pill">✦ Every Scrap Tells a Story</span>
@@ -311,21 +217,16 @@
     </div>
   </header>
 
-  <!-- TOMBOL TOGGLE KAPSUL -->
   <div class="switcher-wrap">
     <div class="pill-switcher">
-      <button type="button" class="switch-btn active" id="tabShare" onclick="switchMode('share')">
-        ✨ Share Creation
-      </button>
-      <button type="button" class="switch-btn" id="tabSell" onclick="switchMode('sell')">
-        🏷️ Sell Your Creation
-      </button>
+      <button type="button" class="switch-btn active" id="tabShare" onclick="switchMode('share')">✨ Share Creation</button>
+      <button type="button" class="switch-btn" id="tabSell" onclick="switchMode('sell')">🏷️ Sell Your Creation</button>
     </div>
   </div>
 
   <div class="container">
-    <!-- FORM 1: SHARE CREATION (GALERI) -->
-    <form id="shareForm" class="form-card">
+    <!-- FORM 1: SHARE -->
+    <form id="shareForm" class="form-card" data-sheet="Sheet1">
       <span class="sparkle">✳</span>
       <div class="badge">✦ Make Something Magical ✦</div>
       <h3>Share Your Creation</h3>
@@ -335,39 +236,35 @@
         <label><span class="dot">✦</span> Nama Pembuat</label>
         <input type="text" name="nama" placeholder="Masukkan nama kamu..." required>
       </div>
-
       <div class="field-group">
         <label><span class="dot">✦</span> Judul Kreasi</label>
         <input type="text" name="judul" placeholder="Contoh: Gantungan Kunci 3D Print..." required>
       </div>
-
       <div class="field-group">
         <label><span class="dot">✦</span> Bahan yang Kamu Gunakan</label>
         <input type="text" name="bahan" placeholder="Botol plastik, kardus, kain flanel..." required>
       </div>
-
       <div class="field-group">
         <label><span class="dot">✦</span> Cerita di Balik Karyamu</label>
-        <textarea name="cerita" rows="3" placeholder="Ceritakan proses pembuatannya ya aku penasaran..." required></textarea>
+        <textarea name="cerita" placeholder="Ceritakan proses pembuatannya ya aku penasaran..." required></textarea>
       </div>
-
       <div class="field-group" style="margin-bottom: 0;">
         <label><span class="dot">✦</span> Foto Hasil Kreasi (Maks 10MB)</label>
         <div class="file-upload-box">
-          <input type="file" id="fotoShare" accept="image/*" required>
+          <input type="file" name="fileInput" accept="image/*" required>
           <span class="upload-icon">📸</span>
-          <span class="upload-text" id="labelShare">Klik untuk pilih foto karyamu</span>
+          <span class="upload-text">Klik untuk pilih foto karyamu</span>
           <span class="upload-hint">Format JPG, PNG, atau WEBP</span>
-          <div class="preview-box" id="prevBoxShare"><img id="prevImgShare" src="" alt="Preview"></div>
+          <div class="preview-box"><img src="" alt="Preview"></div>
         </div>
       </div>
 
-      <button type="submit" class="submit-btn" id="btnShare">Kirim Karyamu <span>→</span></button>
-      <p class="loading" id="loadShare">⏳ Sedang mengunggah karya ke galeri...</p>
+      <button type="submit" class="submit-btn">Kirim Karyamu <span>→</span></button>
+      <p class="loading">⏳ Sedang mengunggah karya ke galeri...</p>
     </form>
 
-    <!-- FORM 2: SELL YOUR CREATION (MARKETPLACE) -->
-    <form id="sellForm" class="form-card hidden">
+    <!-- FORM 2: SELL -->
+    <form id="sellForm" class="form-card hidden" data-sheet="Marketplace">
       <span class="sparkle">✳</span>
       <div class="badge pink">✦ REBLOOM Marketplace ✦</div>
       <h3>Sell Your Creation +</h3>
@@ -383,7 +280,6 @@
           <input type="text" name="namaProduk" placeholder="Contoh: EcoPot Berry..." required>
         </div>
       </div>
-
       <div class="row-2">
         <div class="field-group">
           <label><span class="dot">✦</span> Harga produk</label>
@@ -401,185 +297,138 @@
           </select>
         </div>
       </div>
-
       <div class="field-group">
         <label><span class="dot">✦</span> Deskripsi produk</label>
-        <textarea name="deskripsi" rows="3" placeholder="Jelaskan kegunaan dan keunikan produkmu..." required></textarea>
+        <textarea name="deskripsi" placeholder="Jelaskan kegunaan dan keunikan produkmu..." required></textarea>
       </div>
-
       <div class="field-group">
         <label><span class="dot">✦</span> Bahan yang digunakan</label>
-        <input type="text" name="bahan" placeholder="Contoh: Galon bekas, cat kayu, kain flanel..." required>
+        <input type="text" name="bahan" placeholder="Contoh: Galon bekas, cat kayu..." required>
       </div>
-
       <div class="field-group">
         <label><span class="dot">✦</span> Informasi kontak publik</label>
-        <input type="text" name="kontak" placeholder="Email, Instagram, atau nomor WhatsApp..." required>
-        <div class="helper">Cantumkan hanya informasi kontak yang nyaman dibagikan secara publik. Jangan sertakan detail pembayaran.</div>
+        <input type="text" name="kontak" placeholder="Email, IG, atau nomor WA..." required>
+        <div class="helper">Cantumkan hanya informasi kontak yang nyaman dibagikan secara publik.</div>
       </div>
-
       <div class="field-group" style="margin-bottom: 0;">
         <label><span class="dot">✦</span> Foto produk (Maks 10MB)</label>
         <div class="file-upload-box">
-          <input type="file" id="fotoSell" accept="image/*" required>
+          <input type="file" name="fileInput" accept="image/*" required>
           <span class="upload-icon">🛍️</span>
-          <span class="upload-text" id="labelSell">Klik untuk pilih foto produk</span>
+          <span class="upload-text">Klik untuk pilih foto produk</span>
           <span class="upload-hint">Format JPG, PNG, atau WEBP</span>
-          <div class="preview-box" id="prevBoxSell"><img id="prevImgSell" src="" alt="Preview"></div>
+          <div class="preview-box"><img src="" alt="Preview"></div>
         </div>
       </div>
 
-      <button type="submit" class="submit-btn" id="btnSell">Kirim Detail & Foto Produk <span>→</span></button>
-      <p class="loading" id="loadSell">⏳ Sedang mendaftarkan produk ke Marketplace...</p>
+      <button type="submit" class="submit-btn">Kirim Detail & Foto <span>→</span></button>
+      <p class="loading">⏳ Sedang mendaftarkan produk ke Marketplace...</p>
     </form>
 
-    <div class="footer-pill">
-      <span>from waste to wellness</span>
-    </div>
+    <div class="footer-pill"><span>from waste to wellness</span></div>
   </div>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzynPK7o-ElDmZj87rVzWrBFl7UpfU0VH5c21CNjxtDUs1_J62N9cNuynHu-RiyjR7NLA/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQuRChpHVEd8dyYJhK4MUrjBkrnpk4A9rALrrBFdX5QsLnVcM8yH0PnUFU8WHXzGFzug/exec';
 
-    // Fungsi pindah tab form
+    // 1. Switcher Logika
     function switchMode(mode) {
-      const shareForm = document.getElementById('shareForm');
-      const sellForm = document.getElementById('sellForm');
-      const tabShare = document.getElementById('tabShare');
-      const tabSell = document.getElementById('tabSell');
-
-      if (mode === 'sell') {
-        document.body.classList.add('mode-sell');
-        shareForm.classList.add('hidden');
-        sellForm.classList.remove('hidden');
-        tabShare.classList.remove('active');
-        tabSell.classList.add('active');
-      } else {
-        document.body.classList.remove('mode-sell');
-        sellForm.classList.add('hidden');
-        shareForm.classList.remove('hidden');
-        tabSell.classList.remove('active');
-        tabShare.classList.add('active');
-      }
+      const isSell = mode === 'sell';
+      document.body.classList.toggle('mode-sell', isSell);
+      document.getElementById('shareForm').classList.toggle('hidden', isSell);
+      document.getElementById('sellForm').classList.toggle('hidden', !isSell);
+      document.getElementById('tabShare').classList.toggle('active', !isSell);
+      document.getElementById('tabSell').classList.toggle('active', isSell);
     }
+    if (new URLSearchParams(window.location.search).get('tab') === 'sell') switchMode('sell');
 
-    // Otomatis buka tab Sell jika dibuka lewat ?tab=sell
-    if (new URLSearchParams(window.location.search).get('tab') === 'sell') {
-      switchMode('sell');
-    }
-
-    // Helper Preview Foto
-    function setupPreview(inputId, labelId, boxId, imgId, defaultText) {
-      document.getElementById(inputId).addEventListener('change', function(e) {
+    // 2. Setup Preview File (Berlaku untuk semua form)
+    document.querySelectorAll('.file-upload-box input[type="file"]').forEach(input => {
+      input.addEventListener('change', function(e) {
         const file = e.target.files[0];
-        const label = document.getElementById(labelId);
-        const box = document.getElementById(boxId);
-        const img = document.getElementById(imgId);
+        const container = this.closest('.file-upload-box');
+        const textLabel = container.querySelector('.upload-text');
+        const defaultText = textLabel.dataset.default || textLabel.innerText;
+        if(!textLabel.dataset.default) textLabel.dataset.default = defaultText; // Simpan teks asli
+        
+        const previewBox = container.querySelector('.preview-box');
+        const img = previewBox.querySelector('img');
+
+        // Validasi Ukuran (10MB = 10 * 1024 * 1024 bytes)
+        if (file && file.size > 10485760) {
+          alert('Ups! Ukuran foto terlalu besar. Maksimal 10MB ya.');
+          this.value = ''; // Reset input
+          textLabel.textContent = defaultText;
+          previewBox.style.display = 'none';
+          return;
+        }
+
         if (file) {
-          label.textContent = file.name;
+          textLabel.textContent = file.name;
           const reader = new FileReader();
-          reader.onload = ev => { img.src = ev.target.result; box.style.display = 'block'; };
+          reader.onload = ev => { img.src = ev.target.result; previewBox.style.display = 'block'; };
           reader.readAsDataURL(file);
         } else {
-          label.textContent = defaultText;
-          box.style.display = 'none';
+          textLabel.textContent = defaultText;
+          previewBox.style.display = 'none';
         }
       });
-    }
-    setupPreview('fotoShare', 'labelShare', 'prevBoxShare', 'prevImgShare', 'Klik untuk pilih foto karyamu');
-    setupPreview('fotoSell', 'labelSell', 'prevBoxSell', 'prevImgSell', 'Klik untuk pilih foto produk');
-
-    // Submit Form 1: Share Creation
-    document.getElementById('shareForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const btn = document.getElementById('btnShare');
-      const load = document.getElementById('loadShare');
-      const form = this;
-      btn.style.display = 'none';
-      load.style.display = 'block';
-
-      const file = document.getElementById('fotoShare').files[0];
-      const reader = new FileReader();
-      reader.onload = function(ev) {
-        const params = new URLSearchParams();
-        params.append('targetSheet', 'Sheet1');
-        params.append('nama', form.nama.value);
-        params.append('judul', form.judul.value);
-        params.append('bahan', form.bahan.value);
-        params.append('cerita', form.cerita.value);
-        params.append('fileData', ev.target.result.split(',')[1]);
-        params.append('fileName', file.name);
-        params.append('mimeType', file.type);
-
-        fetch(SCRIPT_URL, { method: 'POST', body: params })
-          .then(res => res.json())
-          .then(data => {
-            if (data.result === 'success') {
-              alert('Yeay! Kreasi berhasil dikirim dan tersimpan di Galeri REBLOOM.');
-              form.reset();
-              document.getElementById('labelShare').textContent = 'Klik untuk pilih foto karyamu';
-              document.getElementById('prevBoxShare').style.display = 'none';
-            } else {
-              alert('Gagal dari server: ' + data.message);
-            }
-            btn.style.display = 'flex';
-            load.style.display = 'none';
-          })
-          .catch(() => {
-            alert('Terjadi kesalahan koneksi, silahkan coba lagi.');
-            btn.style.display = 'flex';
-            load.style.display = 'none';
-          });
-      };
-      reader.readAsDataURL(file);
     });
 
-    // Submit Form 2: Sell Creation
-    document.getElementById('sellForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const btn = document.getElementById('btnSell');
-      const load = document.getElementById('loadSell');
-      const form = this;
-      btn.style.display = 'none';
-      load.style.display = 'block';
+    // 3. Logika Submit Dinamis (1 Fungsi untuk 2 Form)
+    document.querySelectorAll('form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = this.querySelector('.submit-btn');
+        const load = this.querySelector('.loading');
+        const fileInput = this.querySelector('input[type="file"]');
+        const file = fileInput.files[0];
+        const targetSheet = this.dataset.sheet; // Ngambil dari data-sheet HTML
 
-      const file = document.getElementById('fotoSell').files[0];
-      const reader = new FileReader();
-      reader.onload = function(ev) {
-        const params = new URLSearchParams();
-        params.append('targetSheet', 'Marketplace');
-        params.append('namaPenjual', form.namaPenjual.value);
-        params.append('namaProduk', form.namaProduk.value);
-        params.append('harga', form.harga.value);
-        params.append('kategori', form.kategori.value);
-        params.append('deskripsi', form.deskripsi.value);
-        params.append('bahan', form.bahan.value);
-        params.append('kontak', form.kontak.value);
-        params.append('fileData', ev.target.result.split(',')[1]);
-        params.append('fileName', file.name);
-        params.append('mimeType', file.type);
+        btn.style.display = 'none';
+        load.style.display = 'block';
 
-        fetch(SCRIPT_URL, { method: 'POST', body: params })
-          .then(res => res.json())
-          .then(data => {
-            if (data.result === 'success') {
-              alert('Berhasil! Produk kamu sudah terdaftar di Marketplace REBLOOM.');
-              form.reset();
-              document.getElementById('labelSell').textContent = 'Klik untuk pilih foto produk';
-              document.getElementById('prevBoxSell').style.display = 'none';
-            } else {
-              alert('Gagal dari server: ' + data.message);
-            }
-            btn.style.display = 'flex';
-            load.style.display = 'none';
-          })
-          .catch(() => {
-            alert('Terjadi kesalahan koneksi, silahkan coba lagi.');
-            btn.style.display = 'flex';
-            load.style.display = 'none';
-          });
-      };
-      reader.readAsDataURL(file);
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const params = new URLSearchParams();
+          params.append('targetSheet', targetSheet);
+          
+          // Looping ambil semua data input (nama, judul, dll) secara otomatis
+          const formData = new FormData(this);
+          for (const [key, value] of formData.entries()) {
+            if (key !== 'fileInput') params.append(key, value);
+          }
+
+          params.append('fileData', ev.target.result.split(',')[1]);
+          params.append('fileName', file.name);
+          params.append('mimeType', file.type);
+
+          fetch(SCRIPT_URL, { method: 'POST', body: params })
+            .then(res => res.json())
+            .then(data => {
+              if (data.result === 'success') {
+                const msg = targetSheet === 'Sheet1' 
+                  ? 'Yeay! Kreasi berhasil dikirim dan tersimpan di Galeri REBLOOM.' 
+                  : 'Berhasil! Produk kamu sudah terdaftar di Marketplace REBLOOM.';
+                alert(msg);
+                this.reset(); // Reset form
+                
+                // Reset foto preview
+                const uploadBox = this.querySelector('.file-upload-box');
+                uploadBox.querySelector('.upload-text').textContent = uploadBox.querySelector('.upload-text').dataset.default;
+                uploadBox.querySelector('.preview-box').style.display = 'none';
+              } else {
+                alert('Gagal dari server: ' + data.message);
+              }
+            })
+            .catch(() => alert('Terjadi kesalahan koneksi, silahkan coba lagi.'))
+            .finally(() => {
+              btn.style.display = 'flex';
+              load.style.display = 'none';
+            });
+        };
+        reader.readAsDataURL(file);
+      });
     });
   </script>
 </body>
