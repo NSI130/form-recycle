@@ -3,29 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kirim Kreasi Kamu — REBLOOM</title>
+  <title>REBLOOM — Share & Sell Your Creation</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: 'DM Sans', sans-serif;
       background-color: #EBF3E3;
-      background-image: radial-gradient(#d5e3c8 1px, transparent 1px);
+      background-image: radial-gradient(rgba(38, 59, 41, 0.12) 1px, transparent 1px);
       background-size: 24px 24px;
       color: #263B29;
       margin: 0;
-      padding: 0 0 48px 0;
+      padding: 0 0 56px 0;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      transition: background-color 0.4s ease;
     }
 
-    /* Top Bar ala Header REBLOOM (Logo Kiri, Penyemangat Kanan) */
+    /* Mode Sell: Background berubah jadi Kuning Pastel REBLOOM */
+    body.mode-sell {
+      background-color: #FCE29C;
+    }
+
+    /* Header Bar REBLOOM */
     .top-bar {
       width: 100%;
       background-color: #FDF9F1;
@@ -36,114 +40,102 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 14px;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .brand { display: flex; align-items: center; gap: 12px; }
     .brand-icon {
-      width: 36px;
-      height: 36px;
-      background-color: #D9E8CD;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      color: #263B29;
+      width: 36px; height: 36px; background-color: #D9E8CD; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 18px;
     }
+    .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+    .brand-title { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 16px; }
+    .brand-sub { font-size: 11px; color: #6B7C6E; }
 
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.15;
-    }
-
-    .brand-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 800;
-      font-size: 16px;
-      letter-spacing: 0.5px;
-      color: #263B29;
-    }
-
-    .brand-sub {
-      font-size: 11px;
-      color: #6B7C6E;
-    }
-
-    /* Bagian Kanan Header: Kata-kata Penyemangat */
     .header-quotes {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
     }
-
-    .quote-text {
-      font-size: 13px;
-      font-weight: 500;
-      color: #4A5D4D;
-    }
-
+    .quote-text { font-size: 13px; font-weight: 500; color: #4A5D4D; }
     .quote-pill {
-      background-color: #FADCE4; /* Pink pastel persis tombol "Create a ZIP" di header kamu */
-      color: #263B29;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 12.5px;
-      font-weight: 700;
-      padding: 8px 18px;
+      background-color: #FADCE4; color: #263B29; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12.5px; font-weight: 700; padding: 8px 18px; border-radius: 999px;
+    }
+
+    /* TOGGLE PILL SWITCHER (Persis Inspirasi Plans & Pricing!) */
+    .switcher-wrap {
+      margin-bottom: 24px;
+      padding: 0 16px;
+    }
+
+    .pill-switcher {
+      background-color: #FDF9F1;
+      padding: 6px;
       border-radius: 999px;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      letter-spacing: 0.2px;
+      box-shadow: 0 8px 24px rgba(38, 59, 41, 0.08);
+      border: 1px solid rgba(38, 59, 41, 0.08);
     }
 
-    /* Responsif untuk layar HP */
-    @media (max-width: 680px) {
-      .top-bar {
-        padding: 14px 20px;
-        justify-content: center;
-        text-align: center;
-      }
-      .header-quotes {
-        justify-content: center;
-      }
-      .quote-text {
-        display: none; /* Di HP tampilkan pill penyemangatnya saja biar ringkas */
-      }
+    .switch-btn {
+      border: none;
+      background: transparent;
+      color: #4A5D4D;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 11px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
     }
 
-    /* Wrapper Utama */
+    .switch-btn:hover {
+      color: #263B29;
+    }
+
+    .switch-btn.active {
+      background-color: #263B29;
+      color: #FDF9F1;
+      box-shadow: 0 4px 12px rgba(38, 59, 41, 0.2);
+    }
+
+    /* Container Form */
     .container {
       width: 100%;
-      max-width: 460px;
+      max-width: 500px;
       padding: 0 16px;
-      position: relative;
+      transition: max-width 0.3s ease;
     }
 
-    /* Kartu Form Utama */
-    form {
+    body.mode-sell .container {
+      max-width: 560px;
+    }
+
+    .form-card {
       background: #FDF9F1;
       padding: 32px 28px;
       border-radius: 24px;
       box-shadow: 0 14px 35px rgba(38, 59, 41, 0.08);
       border: 1px solid rgba(38, 59, 41, 0.08);
       position: relative;
+      animation: fadeSlide 0.3s ease;
     }
 
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hidden { display: none !important; }
+
     .sparkle {
-      position: absolute;
-      top: 22px;
-      right: 24px;
-      font-size: 20px;
-      color: #263B29;
-      opacity: 0.7;
+      position: absolute; top: 22px; right: 24px;
+      font-size: 20px; color: #263B29; opacity: 0.7;
     }
 
     .badge {
@@ -160,12 +152,15 @@
       margin-bottom: 12px;
     }
 
+    .badge.pink {
+      background-color: #FADCE4;
+    }
+
     h3 {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 26px;
       font-weight: 800;
       margin: 0 0 6px 0;
-      color: #263B29;
       letter-spacing: -0.5px;
     }
 
@@ -176,32 +171,31 @@
       line-height: 1.5;
     }
 
-    .field-group {
-      margin-bottom: 18px;
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
     }
 
+    .field-group { margin-bottom: 17px; }
+
     label {
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       margin-bottom: 7px;
       color: #263B29;
-      letter-spacing: 0.3px;
     }
 
-    label span.dot {
-      color: #E5989B;
-      font-size: 14px;
-    }
+    label span.dot { color: #E5989B; font-size: 14px; }
 
-    input[type="text"],
-    textarea {
+    input[type="text"], select, textarea {
       width: 100%;
-      padding: 13px 16px;
+      padding: 12px 15px;
       border: 1.5px solid #DCE5D5;
-      border-radius: 14px;
+      border-radius: 13px;
       font-size: 14px;
       font-family: 'DM Sans', sans-serif;
       color: #263B29;
@@ -209,22 +203,20 @@
       transition: all 0.2s ease;
     }
 
-    input[type="text"]::placeholder,
-    textarea::placeholder {
-      color: #9AA89C;
-    }
-
-    input[type="text"]:focus,
-    textarea:focus {
+    input:focus, select:focus, textarea:focus {
       outline: none;
       border-color: #263B29;
       background-color: #F7FBF3;
       box-shadow: 0 0 0 4px rgba(217, 232, 205, 0.5);
     }
 
-    textarea {
-      resize: vertical;
-      min-height: 90px;
+    textarea { resize: vertical; min-height: 88px; }
+
+    .helper {
+      font-size: 11px;
+      color: #6B7C6E;
+      margin-top: 5px;
+      line-height: 1.4;
     }
 
     .file-upload-box {
@@ -236,57 +228,27 @@
       text-align: center;
       cursor: pointer;
       transition: all 0.2s ease;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
 
-    .file-upload-box:hover {
-      background-color: rgba(250, 220, 228, 0.65);
-    }
+    .file-upload-box:hover { background-color: rgba(250, 220, 228, 0.65); }
 
     .file-upload-box input[type="file"] {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      cursor: pointer;
+      position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
     }
 
-    .upload-icon {
-      font-size: 22px;
-      margin-bottom: 4px;
-      display: block;
-    }
+    .upload-icon { font-size: 22px; margin-bottom: 4px; display: block; }
+    .upload-text { font-size: 13px; font-weight: 700; display: block; }
+    .upload-hint { font-size: 11.5px; color: #5C6E5E; display: block; margin-top: 2px; }
 
-    .upload-text {
-      font-size: 13px;
-      font-weight: 700;
-      color: #263B29;
-      display: block;
-    }
-
-    .upload-hint {
-      font-size: 11.5px;
-      color: #5C6E5E;
-      display: block;
-      margin-top: 2px;
-    }
-
-    #previewContainer {
-      display: none;
-      margin-top: 12px;
-    }
-
-    #previewImg {
-      max-width: 100%;
-      max-height: 160px;
-      border-radius: 12px;
-      object-fit: cover;
-      border: 2px solid #FFFFFF;
+    .preview-box { display: none; margin-top: 12px; }
+    .preview-box img {
+      max-width: 100%; max-height: 155px; border-radius: 12px;
+      object-fit: cover; border: 2px solid #FFFFFF;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
-    button {
+    .submit-btn {
       background-color: #263B29;
       color: #FDF9F1;
       padding: 15px 24px;
@@ -305,42 +267,29 @@
       box-shadow: 0 6px 16px rgba(38, 59, 41, 0.18);
     }
 
-    button:hover {
+    .submit-btn:hover {
       background-color: #FADCE4;
       color: #263B29;
       box-shadow: inset 0 0 0 1.5px #263B29, 0 6px 16px rgba(38, 59, 41, 0.12);
       transform: translateY(-2px);
     }
 
-    button:active {
-      transform: translateY(0);
-    }
-
     .loading {
-      display: none;
-      text-align: center;
-      font-weight: 700;
-      color: #263B29;
-      font-size: 13.5px;
-      margin-top: 14px;
-      background-color: #FDE28A;
-      padding: 13px 16px;
-      border-radius: 999px;
+      display: none; text-align: center; font-weight: 700; font-size: 13.5px;
+      margin-top: 14px; background-color: #FDE28A; padding: 13px 16px; border-radius: 999px;
     }
 
-    .footer-pill {
-      margin-top: 18px;
-      text-align: center;
-    }
-
+    .footer-pill { margin-top: 18px; text-align: center; }
     .footer-pill span {
-      display: inline-block;
-      background-color: #F4B89B;
-      color: #263B29;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 5px 14px;
-      border-radius: 999px;
+      display: inline-block; background-color: #F4B89B; color: #263B29;
+      font-size: 11px; font-weight: 700; padding: 5px 14px; border-radius: 999px;
+    }
+
+    @media (max-width: 680px) {
+      .top-bar { padding: 14px 20px; justify-content: center; }
+      .quote-text { display: none; }
+      .row-2 { grid-template-columns: 1fr; gap: 0; }
+      .switch-btn { padding: 10px 16px; font-size: 12.5px; }
     }
   </style>
 </head>
@@ -362,8 +311,21 @@
     </div>
   </header>
 
+  <!-- TOMBOL TOGGLE KAPSUL -->
+  <div class="switcher-wrap">
+    <div class="pill-switcher">
+      <button type="button" class="switch-btn active" id="tabShare" onclick="switchMode('share')">
+        ✨ Share Creation
+      </button>
+      <button type="button" class="switch-btn" id="tabSell" onclick="switchMode('sell')">
+        🏷️ Sell Your Creation
+      </button>
+    </div>
+  </div>
+
   <div class="container">
-    <form id="myForm">
+    <!-- FORM 1: SHARE CREATION (GALERI) -->
+    <form id="shareForm" class="form-card">
       <span class="sparkle">✳</span>
       <div class="badge">✦ Make Something Magical ✦</div>
       <h3>Share Your Creation</h3>
@@ -392,18 +354,83 @@
       <div class="field-group" style="margin-bottom: 0;">
         <label><span class="dot">✦</span> Foto Hasil Kreasi (Maks 10MB)</label>
         <div class="file-upload-box">
-          <input type="file" name="foto" id="fotoInput" accept="image/*" required>
+          <input type="file" id="fotoShare" accept="image/*" required>
           <span class="upload-icon">📸</span>
-          <span class="upload-text" id="fileLabel">Klik untuk pilih foto karyamu</span>
+          <span class="upload-text" id="labelShare">Klik untuk pilih foto karyamu</span>
           <span class="upload-hint">Format JPG, PNG, atau WEBP</span>
-          <div id="previewContainer">
-            <img id="previewImg" src="" alt="Preview Foto">
-          </div>
+          <div class="preview-box" id="prevBoxShare"><img id="prevImgShare" src="" alt="Preview"></div>
         </div>
       </div>
 
-      <button type="submit" id="submitBtn">Kirim Karyamu <span>→</span></button>
-      <p class="loading" id="loadingText">⏳ Sedang mengunggah karya ke galeri...</p>
+      <button type="submit" class="submit-btn" id="btnShare">Kirim Karyamu <span>→</span></button>
+      <p class="loading" id="loadShare">⏳ Sedang mengunggah karya ke galeri...</p>
+    </form>
+
+    <!-- FORM 2: SELL YOUR CREATION (MARKETPLACE) -->
+    <form id="sellForm" class="form-card hidden">
+      <span class="sparkle">✳</span>
+      <div class="badge pink">✦ REBLOOM Marketplace ✦</div>
+      <h3>Sell Your Creation +</h3>
+      <p class="subtitle">Ceritakan harta daur ulang yang ingin Anda jual. Pembeli akan menghubungi penjual untuk mengatur pembelian.</p>
+
+      <div class="row-2">
+        <div class="field-group">
+          <label><span class="dot">✦</span> Nama penjual</label>
+          <input type="text" name="namaPenjual" placeholder="Nama / Kelompok..." required>
+        </div>
+        <div class="field-group">
+          <label><span class="dot">✦</span> Nama produk</label>
+          <input type="text" name="namaProduk" placeholder="Contoh: EcoPot Berry..." required>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="field-group">
+          <label><span class="dot">✦</span> Harga produk</label>
+          <input type="text" name="harga" placeholder="misalnya Rp 45.000" required>
+        </div>
+        <div class="field-group">
+          <label><span class="dot">✦</span> Kategori produk</label>
+          <select name="kategori" required>
+            <option value="" disabled selected>Pilih kategori</option>
+            <option value="Plastic">Plastic</option>
+            <option value="Fabric">Fabric</option>
+            <option value="Paper / Cardboard">Paper / Cardboard</option>
+            <option value="Oil / Wax">Oil / Wax</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label><span class="dot">✦</span> Deskripsi produk</label>
+        <textarea name="deskripsi" rows="3" placeholder="Jelaskan kegunaan dan keunikan produkmu..." required></textarea>
+      </div>
+
+      <div class="field-group">
+        <label><span class="dot">✦</span> Bahan yang digunakan</label>
+        <input type="text" name="bahan" placeholder="Contoh: Galon bekas, cat kayu, kain flanel..." required>
+      </div>
+
+      <div class="field-group">
+        <label><span class="dot">✦</span> Informasi kontak publik</label>
+        <input type="text" name="kontak" placeholder="Email, Instagram, atau nomor WhatsApp..." required>
+        <div class="helper">Cantumkan hanya informasi kontak yang nyaman dibagikan secara publik. Jangan sertakan detail pembayaran.</div>
+      </div>
+
+      <div class="field-group" style="margin-bottom: 0;">
+        <label><span class="dot">✦</span> Foto produk (Maks 10MB)</label>
+        <div class="file-upload-box">
+          <input type="file" id="fotoSell" accept="image/*" required>
+          <span class="upload-icon">🛍️</span>
+          <span class="upload-text" id="labelSell">Klik untuk pilih foto produk</span>
+          <span class="upload-hint">Format JPG, PNG, atau WEBP</span>
+          <div class="preview-box" id="prevBoxSell"><img id="prevImgSell" src="" alt="Preview"></div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="btnSell">Kirim Detail & Foto Produk <span>→</span></button>
+      <p class="loading" id="loadSell">⏳ Sedang mendaftarkan produk ke Marketplace...</p>
     </form>
 
     <div class="footer-pill">
@@ -412,79 +439,148 @@
   </div>
 
   <script>
-    document.getElementById('fotoInput').addEventListener('change', function(e) {
-      var file = e.target.files[0];
-      var fileLabel = document.getElementById('fileLabel');
-      var previewContainer = document.getElementById('previewContainer');
-      var previewImg = document.getElementById('previewImg');
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzynPK7o-ElDmZj87rVzWrBFl7UpfU0VH5c21CNjxtDUs1_J62N9cNuynHu-RiyjR7NLA/exec';
 
-      if (file) {
-        fileLabel.textContent = file.name;
-        var reader = new FileReader();
-        reader.onload = function(ev) {
-          previewImg.src = ev.target.result;
-          previewContainer.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
+    // Fungsi pindah tab form
+    function switchMode(mode) {
+      const shareForm = document.getElementById('shareForm');
+      const sellForm = document.getElementById('sellForm');
+      const tabShare = document.getElementById('tabShare');
+      const tabSell = document.getElementById('tabSell');
+
+      if (mode === 'sell') {
+        document.body.classList.add('mode-sell');
+        shareForm.classList.add('hidden');
+        sellForm.classList.remove('hidden');
+        tabShare.classList.remove('active');
+        tabSell.classList.add('active');
       } else {
-        fileLabel.textContent = 'Klik untuk pilih foto karyamu';
-        previewContainer.style.display = 'none';
+        document.body.classList.remove('mode-sell');
+        sellForm.classList.add('hidden');
+        shareForm.classList.remove('hidden');
+        tabSell.classList.remove('active');
+        tabShare.classList.add('active');
       }
-    });
+    }
 
-    document.getElementById('myForm').addEventListener('submit', function(e) {
+    // Otomatis buka tab Sell jika dibuka lewat ?tab=sell
+    if (new URLSearchParams(window.location.search).get('tab') === 'sell') {
+      switchMode('sell');
+    }
+
+    // Helper Preview Foto
+    function setupPreview(inputId, labelId, boxId, imgId, defaultText) {
+      document.getElementById(inputId).addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const label = document.getElementById(labelId);
+        const box = document.getElementById(boxId);
+        const img = document.getElementById(imgId);
+        if (file) {
+          label.textContent = file.name;
+          const reader = new FileReader();
+          reader.onload = ev => { img.src = ev.target.result; box.style.display = 'block'; };
+          reader.readAsDataURL(file);
+        } else {
+          label.textContent = defaultText;
+          box.style.display = 'none';
+        }
+      });
+    }
+    setupPreview('fotoShare', 'labelShare', 'prevBoxShare', 'prevImgShare', 'Klik untuk pilih foto karyamu');
+    setupPreview('fotoSell', 'labelSell', 'prevBoxSell', 'prevImgSell', 'Klik untuk pilih foto produk');
+
+    // Submit Form 1: Share Creation
+    document.getElementById('shareForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      var btn = document.getElementById('submitBtn');
-      var loading = document.getElementById('loadingText');
-      var form = this;
-      
+      const btn = document.getElementById('btnShare');
+      const load = document.getElementById('loadShare');
+      const form = this;
       btn.style.display = 'none';
-      loading.style.display = 'block';
+      load.style.display = 'block';
 
-      var fileInput = form.querySelector('input[type="file"]');
-      var file = fileInput.files[0];
-
-      var reader = new FileReader();
-      reader.onload = function(event) {
-        var base64Data = event.target.result.split(',')[1];
-        
-        var params = new URLSearchParams();
+      const file = document.getElementById('fotoShare').files[0];
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        const params = new URLSearchParams();
+        params.append('targetSheet', 'Sheet1');
         params.append('nama', form.nama.value);
         params.append('judul', form.judul.value);
         params.append('bahan', form.bahan.value);
         params.append('cerita', form.cerita.value);
-        params.append('fileData', base64Data);
+        params.append('fileData', ev.target.result.split(',')[1]);
         params.append('fileName', file.name);
         params.append('mimeType', file.type);
 
-        fetch('https://script.google.com/macros/s/AKfycbzynPK7o-ElDmZj87rVzWrBFl7UpfU0VH5c21CNjxtDUs1_J62N9cNuynHu-RiyjR7NLA/exec', {
-          method: 'POST',
-          body: params
-        })
-        .then(response => response.json())
-        .then(data => {
-          if(data.result === 'success') {
-            alert('Yeay! Kreasi berhasil dikirim dan tersimpan di Galeri REBLOOM.');
-            form.reset();
-            document.getElementById('fileLabel').textContent = 'Klik untuk pilih foto karyamu';
-            document.getElementById('previewContainer').style.display = 'none';
-          } else {
-            alert('Gagal dari server: ' + data.message);
-          }
-          btn.style.display = 'flex';
-          loading.style.display = 'none';
-        })
-        .catch(error => {
-          alert('Terjadi kesalahan koneksi, silahkan coba lagi.');
-          console.error('Error:', error);
-          btn.style.display = 'flex';
-          loading.style.display = 'none';
-        });
+        fetch(SCRIPT_URL, { method: 'POST', body: params })
+          .then(res => res.json())
+          .then(data => {
+            if (data.result === 'success') {
+              alert('Yeay! Kreasi berhasil dikirim dan tersimpan di Galeri REBLOOM.');
+              form.reset();
+              document.getElementById('labelShare').textContent = 'Klik untuk pilih foto karyamu';
+              document.getElementById('prevBoxShare').style.display = 'none';
+            } else {
+              alert('Gagal dari server: ' + data.message);
+            }
+            btn.style.display = 'flex';
+            load.style.display = 'none';
+          })
+          .catch(() => {
+            alert('Terjadi kesalahan koneksi, silahkan coba lagi.');
+            btn.style.display = 'flex';
+            load.style.display = 'none';
+          });
       };
+      reader.readAsDataURL(file);
+    });
 
+    // Submit Form 2: Sell Creation
+    document.getElementById('sellForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSell');
+      const load = document.getElementById('loadSell');
+      const form = this;
+      btn.style.display = 'none';
+      load.style.display = 'block';
+
+      const file = document.getElementById('fotoSell').files[0];
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        const params = new URLSearchParams();
+        params.append('targetSheet', 'Marketplace');
+        params.append('namaPenjual', form.namaPenjual.value);
+        params.append('namaProduk', form.namaProduk.value);
+        params.append('harga', form.harga.value);
+        params.append('kategori', form.kategori.value);
+        params.append('deskripsi', form.deskripsi.value);
+        params.append('bahan', form.bahan.value);
+        params.append('kontak', form.kontak.value);
+        params.append('fileData', ev.target.result.split(',')[1]);
+        params.append('fileName', file.name);
+        params.append('mimeType', file.type);
+
+        fetch(SCRIPT_URL, { method: 'POST', body: params })
+          .then(res => res.json())
+          .then(data => {
+            if (data.result === 'success') {
+              alert('Berhasil! Produk kamu sudah terdaftar di Marketplace REBLOOM.');
+              form.reset();
+              document.getElementById('labelSell').textContent = 'Klik untuk pilih foto produk';
+              document.getElementById('prevBoxSell').style.display = 'none';
+            } else {
+              alert('Gagal dari server: ' + data.message);
+            }
+            btn.style.display = 'flex';
+            load.style.display = 'none';
+          })
+          .catch(() => {
+            alert('Terjadi kesalahan koneksi, silahkan coba lagi.');
+            btn.style.display = 'flex';
+            load.style.display = 'none';
+          });
+      };
       reader.readAsDataURL(file);
     });
   </script>
-
 </body>
 </html>
