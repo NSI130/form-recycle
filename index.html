@@ -4,9 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>REBLOOM — Share & Sell Your Creation</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+  
+  <!-- Optimasi Font: Preconnect agar tidak memblokir render halaman -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
+  <style>
     * { box-sizing: border-box; }
 
     body {
@@ -21,7 +25,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     body.mode-sell {
@@ -93,7 +97,7 @@
       background: #FDF9F1; padding: 34px 30px; border-radius: 24px;
       box-shadow: 0 14px 40px rgba(38, 59, 41, 0.08);
       border: 1px solid rgba(38, 59, 41, 0.06);
-      position: relative; animation: slideFadeUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative; animation: slideFadeUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     @keyframes slideFadeUp {
@@ -105,7 +109,7 @@
 
     .sparkle {
       position: absolute; top: 22px; right: 24px; font-size: 20px; color: #263B29; opacity: 0.7;
-      animation: spinSlow 6s linear infinite;
+      animation: spinSlow 6s linear infinite; will-change: transform;
     }
     @keyframes spinSlow { 100% { transform: rotate(360deg); } }
 
@@ -152,7 +156,7 @@
     .file-upload-box input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
     .upload-icon { font-size: 24px; margin-bottom: 6px; display: block; transition: transform 0.3s ease; }
     .file-upload-box:hover .upload-icon { transform: scale(1.1); }
-    .upload-text { font-size: 13.5px; font-weight: 700; display: block; color: #263B29; }
+    .upload-text { font-size: 13.5px; font-weight: 700; display: block; color: #263B29; word-break: break-word; }
     .upload-hint { font-size: 11.5px; color: #6B7C6E; display: block; margin-top: 4px; }
     .preview-box { display: none; margin-top: 14px; animation: slideFadeUp 0.3s ease; }
     .preview-box img {
@@ -218,16 +222,16 @@
   </header>
 
   <div class="switcher-wrap">
-    <div class="pill-switcher">
-      <button type="button" class="switch-btn active" id="tabShare" onclick="switchMode('share')">✨ Share Creation</button>
-      <button type="button" class="switch-btn" id="tabSell" onclick="switchMode('sell')">🏷️ Sell Your Creation</button>
+    <div class="pill-switcher" role="tablist">
+      <button type="button" role="tab" aria-selected="true" class="switch-btn active" id="tabShare" onclick="switchMode('share')">✨ Share Creation</button>
+      <button type="button" role="tab" aria-selected="false" class="switch-btn" id="tabSell" onclick="switchMode('sell')">🏷️ Sell Your Creation</button>
     </div>
   </div>
 
   <div class="container">
     <!-- FORM 1: SHARE -->
     <form id="shareForm" class="form-card" data-sheet="Sheet1">
-      <span class="sparkle">✳</span>
+      <span class="sparkle" aria-hidden="true">✳</span>
       <div class="badge">✦ Make Something Magical ✦</div>
       <h3>Share Your Creation</h3>
       <p class="subtitle">Ubah barang bekas jadi karya bermakna. Bagikan hasil kreasimu ke galeri REBLOOM!</p>
@@ -251,21 +255,21 @@
       <div class="field-group" style="margin-bottom: 0;">
         <label><span class="dot">✦</span> Foto Hasil Kreasi (Maks 10MB)</label>
         <div class="file-upload-box">
-          <input type="file" name="fileInput" accept="image/*" required>
+          <input type="file" name="fileInput" accept="image/jpeg,image/png,image/webp" required>
           <span class="upload-icon">📸</span>
-          <span class="upload-text">Klik untuk pilih foto karyamu</span>
+          <span class="upload-text" data-default="Klik atau seret foto karyamu ke sini">Klik atau seret foto karyamu ke sini</span>
           <span class="upload-hint">Format JPG, PNG, atau WEBP</span>
           <div class="preview-box"><img src="" alt="Preview"></div>
         </div>
       </div>
 
       <button type="submit" class="submit-btn">Kirim Karyamu <span>→</span></button>
-      <p class="loading">⏳ Sedang mengunggah karya ke galeri...</p>
+      <p class="loading" role="status">⏳ Mengoptimalkan & mengunggah karya ke galeri...</p>
     </form>
 
     <!-- FORM 2: SELL -->
     <form id="sellForm" class="form-card hidden" data-sheet="Marketplace">
-      <span class="sparkle">✳</span>
+      <span class="sparkle" aria-hidden="true">✳</span>
       <div class="badge pink">✦ REBLOOM Marketplace ✦</div>
       <h3>Sell Your Creation +</h3>
       <p class="subtitle">Ceritakan harta daur ulang yang ingin Anda jual. Pembeli akan menghubungi penjual untuk mengatur pembelian.</p>
@@ -313,16 +317,16 @@
       <div class="field-group" style="margin-bottom: 0;">
         <label><span class="dot">✦</span> Foto produk (Maks 10MB)</label>
         <div class="file-upload-box">
-          <input type="file" name="fileInput" accept="image/*" required>
+          <input type="file" name="fileInput" accept="image/jpeg,image/png,image/webp" required>
           <span class="upload-icon">🛍️</span>
-          <span class="upload-text">Klik untuk pilih foto produk</span>
+          <span class="upload-text" data-default="Klik atau seret foto produk ke sini">Klik atau seret foto produk ke sini</span>
           <span class="upload-hint">Format JPG, PNG, atau WEBP</span>
           <div class="preview-box"><img src="" alt="Preview"></div>
         </div>
       </div>
 
       <button type="submit" class="submit-btn">Kirim Detail & Foto <span>→</span></button>
-      <p class="loading">⏳ Sedang mendaftarkan produk ke Marketplace...</p>
+      <p class="loading" role="status">⏳ Mengoptimalkan & mendaftarkan produk...</p>
     </form>
 
     <div class="footer-pill"><span>from waste to wellness</span></div>
@@ -330,104 +334,238 @@
 
   <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQuRChpHVEd8dyYJhK4MUrjBkrnpk4A9rALrrBFdX5QsLnVcM8yH0PnUFU8WHXzGFzug/exec';
+    const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10MB
+    const REQUEST_TIMEOUT_MS = 35000; // 35 detik
 
-    // 1. Switcher Logika
+    // 1. Switcher Logika + Sinkronisasi URL
     function switchMode(mode) {
       const isSell = mode === 'sell';
       document.body.classList.toggle('mode-sell', isSell);
       document.getElementById('shareForm').classList.toggle('hidden', isSell);
       document.getElementById('sellForm').classList.toggle('hidden', !isSell);
-      document.getElementById('tabShare').classList.toggle('active', !isSell);
-      document.getElementById('tabSell').classList.toggle('active', isSell);
+
+      const tabShare = document.getElementById('tabShare');
+      const tabSell = document.getElementById('tabSell');
+      tabShare.classList.toggle('active', !isSell);
+      tabSell.classList.toggle('active', isSell);
+      tabShare.setAttribute('aria-selected', String(!isSell));
+      tabSell.setAttribute('aria-selected', String(isSell));
+
+      const url = new URL(window.location);
+      isSell ? url.searchParams.set('tab', 'sell') : url.searchParams.delete('tab');
+      window.history.replaceState({}, '', url);
     }
-    if (new URLSearchParams(window.location.search).get('tab') === 'sell') switchMode('sell');
 
-    // 2. Setup Preview File (Berlaku untuk semua form)
-    document.querySelectorAll('.file-upload-box input[type="file"]').forEach(input => {
-      input.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        const container = this.closest('.file-upload-box');
-        const textLabel = container.querySelector('.upload-text');
-        const defaultText = textLabel.dataset.default || textLabel.innerText;
-        if(!textLabel.dataset.default) textLabel.dataset.default = defaultText; // Simpan teks asli
-        
-        const previewBox = container.querySelector('.preview-box');
-        const img = previewBox.querySelector('img');
+    if (new URLSearchParams(window.location.search).get('tab') === 'sell') {
+      switchMode('sell');
+    }
 
-        // Validasi Ukuran (10MB = 10 * 1024 * 1024 bytes)
-        if (file && file.size > 10485760) {
-          alert('Ups! Ukuran foto terlalu besar. Maksimal 10MB ya.');
-          this.value = ''; // Reset input
-          textLabel.textContent = defaultText;
-          previewBox.style.display = 'none';
+    // Helper: Reset tampilan kotak upload & bersihkan memori ObjectURL
+    function resetUploadBox(container) {
+      const textLabel = container.querySelector('.upload-text');
+      const previewBox = container.querySelector('.preview-box');
+      const img = previewBox.querySelector('img');
+
+      if (img.dataset.objectUrl) {
+        URL.revokeObjectURL(img.dataset.objectUrl);
+        delete img.dataset.objectUrl;
+      }
+      img.removeAttribute('src');
+      textLabel.textContent = textLabel.dataset.default;
+      previewBox.style.display = 'none';
+    }
+
+    // 2. Setup Preview Instan & Drag-and-Drop
+    document.querySelectorAll('.file-upload-box').forEach(box => {
+      const input = box.querySelector('input[type="file"]');
+      const textLabel = box.querySelector('.upload-text');
+      const previewBox = box.querySelector('.preview-box');
+      const img = previewBox.querySelector('img');
+
+      // Efek visual saat file diseret ke atas kotak
+      ['dragenter', 'dragover'].forEach(evt => {
+        box.addEventListener(evt, e => {
+          e.preventDefault();
+          box.classList.add('dragover');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(evt => {
+        box.addEventListener(evt, e => {
+          e.preventDefault();
+          box.classList.remove('dragover');
+        });
+      });
+
+      box.addEventListener('drop', e => {
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          input.files = e.dataTransfer.files;
+          input.dispatchEvent(new Event('change'));
+        }
+      });
+
+      input.addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) {
+          resetUploadBox(box);
           return;
         }
 
-        if (file) {
-          textLabel.textContent = file.name;
-          const reader = new FileReader();
-          reader.onload = ev => { img.src = ev.target.result; previewBox.style.display = 'block'; };
-          reader.readAsDataURL(file);
-        } else {
-          textLabel.textContent = defaultText;
-          previewBox.style.display = 'none';
+        if (!file.type.startsWith('image/')) {
+          alert('Format file tidak didukung. Pilih file gambar (JPG, PNG, WEBP).');
+          this.value = '';
+          resetUploadBox(box);
+          return;
         }
+
+        if (file.size > MAX_FILE_BYTES) {
+          alert('Ups! Ukuran foto terlalu besar. Maksimal 10MB ya.');
+          this.value = '';
+          resetUploadBox(box);
+          return;
+        }
+
+        // Bersihkan URL preview sebelumnya agar RAM tetap ringan
+        if (img.dataset.objectUrl) {
+          URL.revokeObjectURL(img.dataset.objectUrl);
+        }
+
+        const objectUrl = URL.createObjectURL(file);
+        img.dataset.objectUrl = objectUrl;
+        img.src = objectUrl;
+        textLabel.textContent = file.name;
+        previewBox.style.display = 'block';
       });
     });
 
-    // 3. Logika Submit Dinamis (1 Fungsi untuk 2 Form)
+    // Helper: Kompres & Resize gambar di sisi klien agar upload ke Apps Script super cepat
+    function prepareImagePayload(file, maxDimension = 1280, quality = 0.82) {
+      return new Promise((resolve, reject) => {
+        const objectUrl = URL.createObjectURL(file);
+        const image = new Image();
+
+        image.onload = () => {
+          URL.revokeObjectURL(objectUrl);
+
+          let { width, height } = image;
+          if (width > maxDimension || height > maxDimension) {
+            if (width > height) {
+              height = Math.round((height * maxDimension) / width);
+              width = maxDimension;
+            } else {
+              width = Math.round((width * maxDimension) / height);
+              height = maxDimension;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(image, 0, 0, width, height);
+
+          // Pertahankan PNG hanya jika ukuran awal sudah kecil (< 400KB) untuk menjaga transparansi, selebihnya konversi ke JPEG hemat kuota
+          const outputMime = (file.type === 'image/png' && file.size < 400 * 1024) ? 'image/png' : 'image/jpeg';
+          const dataUrl = canvas.toDataURL(outputMime, quality);
+          const base64Data = dataUrl.split(',')[1];
+          const cleanName = outputMime === 'image/jpeg'
+            ? file.name.replace(/\.[^/.]+$/, '') + '.jpg'
+            : file.name;
+
+          resolve({
+            fileData: base64Data,
+            fileName: cleanName,
+            mimeType: outputMime
+          });
+        };
+
+        image.onerror = () => {
+          URL.revokeObjectURL(objectUrl);
+          reject(new Error('Gagal memproses file gambar. Coba pilih foto lain.'));
+        };
+
+        image.src = objectUrl;
+      });
+    }
+
+    // 3. Logika Submit dengan Timeout & Anti Double-Submit
     document.querySelectorAll('form').forEach(form => {
-      form.addEventListener('submit', function(e) {
+      let isSubmitting = false;
+
+      form.addEventListener('submit', async function(e) {
         e.preventDefault();
+        if (isSubmitting) return;
+
         const btn = this.querySelector('.submit-btn');
         const load = this.querySelector('.loading');
         const fileInput = this.querySelector('input[type="file"]');
         const file = fileInput.files[0];
-        const targetSheet = this.dataset.sheet; // Ngambil dari data-sheet HTML
+        const targetSheet = this.dataset.sheet;
 
+        if (!file) {
+          alert('Pilih foto terlebih dahulu ya!');
+          return;
+        }
+
+        isSubmitting = true;
         btn.style.display = 'none';
         load.style.display = 'block';
 
-        const reader = new FileReader();
-        reader.onload = ev => {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+        try {
+          const compressed = await prepareImagePayload(file);
+
           const params = new URLSearchParams();
           params.append('targetSheet', targetSheet);
-          
-          // Looping ambil semua data input (nama, judul, dll) secara otomatis
+
           const formData = new FormData(this);
           for (const [key, value] of formData.entries()) {
-            if (key !== 'fileInput') params.append(key, value);
+            if (key !== 'fileInput') {
+              params.append(key, typeof value === 'string' ? value.trim() : value);
+            }
           }
 
-          params.append('fileData', ev.target.result.split(',')[1]);
-          params.append('fileName', file.name);
-          params.append('mimeType', file.type);
+          params.append('fileData', compressed.fileData);
+          params.append('fileName', compressed.fileName);
+          params.append('mimeType', compressed.mimeType);
 
-          fetch(SCRIPT_URL, { method: 'POST', body: params })
-            .then(res => res.json())
-            .then(data => {
-              if (data.result === 'success') {
-                const msg = targetSheet === 'Sheet1' 
-                  ? 'Yeay! Kreasi berhasil dikirim dan tersimpan di Galeri REBLOOM.' 
-                  : 'Berhasil! Produk kamu sudah terdaftar di Marketplace REBLOOM.';
-                alert(msg);
-                this.reset(); // Reset form
-                
-                // Reset foto preview
-                const uploadBox = this.querySelector('.file-upload-box');
-                uploadBox.querySelector('.upload-text').textContent = uploadBox.querySelector('.upload-text').dataset.default;
-                uploadBox.querySelector('.preview-box').style.display = 'none';
-              } else {
-                alert('Gagal dari server: ' + data.message);
-              }
-            })
-            .catch(() => alert('Terjadi kesalahan koneksi, silahkan coba lagi.'))
-            .finally(() => {
-              btn.style.display = 'flex';
-              load.style.display = 'none';
-            });
-        };
-        reader.readAsDataURL(file);
+          const response = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: params,
+            signal: controller.signal
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          if (data.result === 'success') {
+            const msg = targetSheet === 'Sheet1'
+              ? 'Yeay! Kreasi berhasil dikirim dan tersimpan di Galeri REBLOOM.'
+              : 'Berhasil! Produk kamu sudah terdaftar di Marketplace REBLOOM.';
+            alert(msg);
+            this.reset();
+            resetUploadBox(this.querySelector('.file-upload-box'));
+          } else {
+            alert('Gagal dari server: ' + (data.message || 'Kesalahan tidak diketahui'));
+          }
+        } catch (err) {
+          if (err.name === 'AbortError') {
+            alert('Waktu koneksi habis. Pastikan sinyal stabil lalu coba kirim ulang ya.');
+          } else {
+            alert(err.message || 'Terjadi kesalahan koneksi, silakan coba lagi.');
+          }
+        } finally {
+          clearTimeout(timeoutId);
+          isSubmitting = false;
+          btn.style.display = 'flex';
+          load.style.display = 'none';
+        }
       });
     });
   </script>
