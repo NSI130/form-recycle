@@ -4,32 +4,52 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>REBLOOM — Share & Sell Your Creation</title>
-  
-  <!-- Optimasi Font: Preconnect agar tidak memblokir render halaman -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      --bg-share: #EBF3E3;
+      --bg-sell: #FCE29C;
+      --surface: #FDF9F1;
+      --surface-input: #FFFFFF;
+      --surface-focus: #F7FBF3;
+      --ink: #263B29;
+      --ink-secondary: #4A5D4D;
+      --ink-muted: #6B7C6E;
+      --ink-placeholder: #A4B2A6;
+      --accent-green: #D9E8CD;
+      --accent-pink: #FADCE4;
+      --accent-yellow: #FDE28A;
+      --accent-peach: #F4B89B;
+      --accent-coral: #E5989B;
+      --border-input: #DCE5D5;
+      --border-subtle: rgba(38, 59, 41, 0.08);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
 
     body {
       font-family: 'DM Sans', sans-serif;
-      background-color: #EBF3E3;
+      background-color: var(--bg-share);
       background-image: radial-gradient(rgba(38, 59, 41, 0.1) 1px, transparent 1px);
       background-size: 24px 24px;
-      color: #263B29;
+      color: var(--ink);
       margin: 0;
-      padding: 0 0 56px 0;
+      padding: 0 0 56px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     body.mode-sell {
-      background-color: #FCE29C;
+      background-color: var(--bg-sell);
     }
 
     /* CUSTOM TOAST NOTIFICATION */
@@ -49,9 +69,9 @@
 
     .rebloom-toast {
       pointer-events: auto;
-      background-color: #FDF9F1;
-      color: #263B29;
-      border: 1.5px solid #263B29;
+      background-color: var(--surface);
+      color: var(--ink);
+      border: 1.5px solid var(--ink);
       border-radius: 18px;
       padding: 14px 16px;
       display: flex;
@@ -78,31 +98,23 @@
       flex-shrink: 0;
     }
 
-    .rebloom-toast.success .toast-icon {
-      background-color: #D9E8CD;
-    }
+    .rebloom-toast.success .toast-icon { background-color: var(--accent-green); }
+    .rebloom-toast.error .toast-icon { background-color: var(--accent-pink); }
 
-    .rebloom-toast.error .toast-icon {
-      background-color: #FADCE4;
-    }
-
-    .toast-body {
-      flex: 1;
-      padding-top: 1px;
-    }
+    .toast-body { flex: 1; padding-top: 1px; }
 
     .toast-title {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 13.5px;
       font-weight: 800;
-      margin: 0 0 3px 0;
+      margin: 0 0 3px;
       line-height: 1.3;
-      color: #263B29;
+      color: var(--ink);
     }
 
     .toast-msg {
       font-size: 12.5px;
-      color: #4A5D4D;
+      color: var(--ink-secondary);
       margin: 0;
       line-height: 1.45;
     }
@@ -110,19 +122,19 @@
     .toast-close {
       background: transparent;
       border: none;
-      color: #6B7C6E;
+      color: var(--ink-muted);
       font-size: 18px;
       line-height: 1;
       cursor: pointer;
       padding: 2px 6px;
       border-radius: 8px;
-      transition: all 0.2s ease;
+      transition: background-color 0.2s ease, color 0.2s ease;
       flex-shrink: 0;
     }
 
     .toast-close:hover {
-      background-color: rgba(38, 59, 41, 0.08);
-      color: #263B29;
+      background-color: var(--border-subtle);
+      color: var(--ink);
     }
 
     .toast-progress {
@@ -135,17 +147,9 @@
       animation: toastProgress linear forwards;
     }
 
-    .rebloom-toast.success .toast-progress {
-      background-color: #263B29;
-    }
-
-    .rebloom-toast.error .toast-progress {
-      background-color: #E5989B;
-    }
-
-    .rebloom-toast:hover .toast-progress {
-      animation-play-state: paused;
-    }
+    .rebloom-toast.success .toast-progress { background-color: var(--ink); }
+    .rebloom-toast.error .toast-progress { background-color: var(--accent-coral); }
+    .rebloom-toast:hover .toast-progress { animation-play-state: paused; }
 
     @keyframes toastSlideIn {
       from { opacity: 0; transform: translateY(-16px) scale(0.96); }
@@ -165,69 +169,112 @@
     /* HEADER BAR */
     .top-bar {
       width: 100%;
-      background-color: #FDF9F1;
+      background-color: var(--surface);
       padding: 14px 40px;
-      border-bottom: 1px solid rgba(38, 59, 41, 0.06);
+      border-bottom: 1px solid var(--border-subtle);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 14px;
       margin-bottom: 30px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
     }
 
     .brand { display: flex; align-items: center; gap: 12px; cursor: default; }
     .brand-icon {
-      width: 38px; height: 38px; background-color: #D9E8CD; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-size: 18px;
+      width: 38px;
+      height: 38px;
+      background-color: var(--accent-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
       transition: transform 0.3s ease;
     }
     .brand:hover .brand-icon { transform: rotate(15deg) scale(1.05); }
     .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
     .brand-title { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: -0.2px; }
-    .brand-sub { font-size: 11px; color: #6B7C6E; }
+    .brand-sub { font-size: 11px; color: var(--ink-muted); }
 
     .header-quotes { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-    .quote-text { font-size: 13px; font-weight: 500; color: #4A5D4D; }
+    .quote-text { font-size: 13px; font-weight: 500; color: var(--ink-secondary); }
     .quote-pill {
-      background-color: #FADCE4; color: #263B29; font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 12.5px; font-weight: 700; padding: 8px 18px; border-radius: 999px;
+      background-color: var(--accent-pink);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 999px;
     }
 
     /* TOGGLE PILL SWITCHER */
     .switcher-wrap { margin-bottom: 28px; padding: 0 16px; }
     .pill-switcher {
-      background-color: #FDF9F1; padding: 6px; border-radius: 999px; display: inline-flex;
-      align-items: center; gap: 4px; box-shadow: 0 8px 24px rgba(38, 59, 41, 0.08);
-      border: 1px solid rgba(38, 59, 41, 0.06);
+      background-color: var(--surface);
+      padding: 6px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 8px 24px rgba(38, 59, 41, 0.08);
+      border: 1px solid var(--border-subtle);
     }
 
     .switch-btn {
-      border: none; background: transparent; color: #6B7C6E;
-      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13.5px; font-weight: 700;
-      padding: 12px 24px; border-radius: 999px; cursor: pointer;
-      display: flex; align-items: center; gap: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      background: transparent;
+      color: var(--ink-muted);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .switch-btn:hover { color: #263B29; background-color: rgba(38, 59, 41, 0.04); }
+    .switch-btn:hover {
+      color: var(--ink);
+      background-color: rgba(38, 59, 41, 0.04);
+    }
+
+    .switch-btn:focus-visible,
+    .submit-btn:focus-visible,
+    .toast-close:focus-visible,
+    .remove-file-btn:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 2px;
+    }
+
     .switch-btn.active {
-      background-color: #263B29; color: #FDF9F1;
-      box-shadow: 0 4px 12px rgba(38, 59, 41, 0.2); pointer-events: none;
+      background-color: var(--ink);
+      color: var(--surface);
+      box-shadow: 0 4px 12px rgba(38, 59, 41, 0.2);
     }
 
     /* CONTAINER & FORM CARD */
     .container {
-      width: 100%; max-width: 500px; padding: 0 16px;
-      transition: max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 100%;
+      max-width: 500px;
+      padding: 0 16px;
+      transition: max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
     body.mode-sell .container { max-width: 560px; }
 
     .form-card {
-      background: #FDF9F1; padding: 34px 30px; border-radius: 24px;
+      background: var(--surface);
+      padding: 34px 30px;
+      border-radius: 24px;
       box-shadow: 0 14px 40px rgba(38, 59, 41, 0.08);
-      border: 1px solid rgba(38, 59, 41, 0.06);
-      position: relative; animation: slideFadeUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid var(--border-subtle);
+      position: relative;
+      animation: slideFadeUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     @keyframes slideFadeUp {
@@ -238,90 +285,241 @@
     .hidden { display: none !important; }
 
     .sparkle {
-      position: absolute; top: 22px; right: 24px; font-size: 20px; color: #263B29; opacity: 0.7;
-      animation: spinSlow 6s linear infinite; will-change: transform;
+      position: absolute;
+      top: 22px;
+      right: 24px;
+      font-size: 20px;
+      color: var(--ink);
+      opacity: 0.7;
+      animation: spinSlow 8s linear infinite;
     }
     @keyframes spinSlow { 100% { transform: rotate(360deg); } }
 
     .badge {
-      display: inline-block; background-color: #FDE28A; color: #263B29;
-      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700;
-      letter-spacing: 0.8px; padding: 6px 14px; border-radius: 999px;
-      text-transform: uppercase; margin-bottom: 14px;
+      display: inline-block;
+      background-color: var(--accent-yellow);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
     }
-    .badge.pink { background-color: #FADCE4; }
+    .badge.pink { background-color: var(--accent-pink); }
 
-    h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 800; margin: 0 0 6px 0; letter-spacing: -0.5px; }
-    .subtitle { font-size: 13.5px; color: #5C6E5E; margin: 0 0 26px 0; line-height: 1.5; }
+    h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      margin: 0 0 6px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      font-size: 13.5px;
+      color: #5C6E5E;
+      margin: 0 0 26px;
+      line-height: 1.5;
+    }
 
     .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .field-group { margin-bottom: 18px; }
-    
-    label { font-size: 12.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 8px; color: #263B29; }
-    label span.dot { color: #E5989B; font-size: 14px; }
+    .field-group.no-margin { margin-bottom: 0; }
+
+    label {
+      font-size: 12.5px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+    label span.dot { color: var(--accent-coral); font-size: 14px; }
 
     /* INPUTS */
     input[type="text"], select, textarea {
-      width: 100%; padding: 13px 16px; border: 1.5px solid #DCE5D5; border-radius: 14px;
-      font-size: 14px; font-family: 'DM Sans', sans-serif; color: #263B29;
-      background-color: #FFFFFF; transition: all 0.25s ease;
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--border-input);
+      border-radius: 14px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+      background-color: var(--surface-input);
+      transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
     }
-    input::placeholder, textarea::placeholder { color: #A4B2A6; }
+    input::placeholder, textarea::placeholder { color: var(--ink-placeholder); }
     input:focus, select:focus, textarea:focus {
-      outline: none; border-color: #263B29; background-color: #F7FBF3;
+      outline: none;
+      border-color: var(--ink);
+      background-color: var(--surface-focus);
       box-shadow: 0 0 0 4px rgba(217, 232, 205, 0.6);
     }
+    input:disabled, select:disabled, textarea:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
     textarea { resize: vertical; min-height: 90px; }
-    .helper { font-size: 11px; color: #6B7C6E; margin-top: 6px; line-height: 1.4; }
+    .helper { font-size: 11px; color: var(--ink-muted); margin-top: 6px; line-height: 1.4; }
 
     /* UPLOAD BOX */
     .file-upload-box {
-      position: relative; background-color: rgba(250, 220, 228, 0.35);
-      border: 1.5px dashed #A4B2A6; border-radius: 16px; padding: 20px 16px;
-      text-align: center; cursor: pointer; transition: all 0.3s ease; margin-bottom: 24px;
+      position: relative;
+      background-color: rgba(250, 220, 228, 0.35);
+      border: 1.5px dashed var(--ink-placeholder);
+      border-radius: 16px;
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+      margin-bottom: 24px;
     }
-    .file-upload-box:hover, .file-upload-box.dragover {
-      background-color: rgba(250, 220, 228, 0.7); border-color: #263B29; transform: translateY(-2px);
+    .file-upload-box:hover,
+    .file-upload-box.dragover,
+    .file-upload-box:focus-within {
+      background-color: rgba(250, 220, 228, 0.7);
+      border-color: var(--ink);
+      transform: translateY(-2px);
     }
-    .file-upload-box input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-    .upload-icon { font-size: 24px; margin-bottom: 6px; display: block; transition: transform 0.3s ease; }
+    .file-upload-box:focus-within {
+      box-shadow: 0 0 0 4px rgba(217, 232, 205, 0.6);
+    }
+    .file-upload-box input[type="file"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 1;
+    }
+    .upload-icon {
+      font-size: 24px;
+      margin-bottom: 6px;
+      display: block;
+      transition: transform 0.25s ease;
+    }
     .file-upload-box:hover .upload-icon { transform: scale(1.1); }
-    .upload-text { font-size: 13.5px; font-weight: 700; display: block; color: #263B29; word-break: break-word; }
-    .upload-hint { font-size: 11.5px; color: #6B7C6E; display: block; margin-top: 4px; }
-    .preview-box { display: none; margin-top: 14px; animation: slideFadeUp 0.3s ease; }
-    .preview-box img {
-      max-width: 100%; max-height: 160px; border-radius: 12px; object-fit: cover;
-      border: 2px solid #FFFFFF; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    .upload-text {
+      font-size: 13.5px;
+      font-weight: 700;
+      display: block;
+      color: var(--ink);
+      word-break: break-word;
     }
+    .upload-hint {
+      font-size: 11.5px;
+      color: var(--ink-muted);
+      display: block;
+      margin-top: 4px;
+    }
+
+    .preview-box {
+      display: none;
+      margin-top: 14px;
+      position: relative;
+      z-index: 2;
+      animation: slideFadeUp 0.3s ease;
+    }
+    .preview-box img {
+      max-width: 100%;
+      max-height: 160px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      display: block;
+      margin: 0 auto;
+    }
+    .preview-meta {
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--surface);
+      border: 1px solid var(--border-input);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      color: var(--ink-secondary);
+    }
+    .remove-file-btn {
+      background: var(--accent-pink);
+      border: none;
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .remove-file-btn:hover { background-color: var(--accent-coral); }
 
     /* SUBMIT BUTTON */
     .submit-btn {
-      background-color: #263B29; color: #FDF9F1; padding: 16px 24px;
-      border: none; border-radius: 999px; cursor: pointer; width: 100%;
-      font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 14.5px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background-color: var(--ink);
+      color: var(--surface);
+      padding: 16px 24px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      width: 100%;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 14.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
       box-shadow: 0 6px 20px rgba(38, 59, 41, 0.15);
     }
     .submit-btn:hover {
-      background-color: #FADCE4; color: #263B29;
-      box-shadow: inset 0 0 0 1.5px #263B29, 0 8px 20px rgba(38, 59, 41, 0.12);
-      transform: translateY(-3px);
+      background-color: var(--accent-pink);
+      color: var(--ink);
+      box-shadow: inset 0 0 0 1.5px var(--ink), 0 8px 20px rgba(38, 59, 41, 0.12);
+      transform: translateY(-2px);
     }
     .submit-btn:active { transform: translateY(0); }
 
     /* LOADING & FOOTER */
     .loading {
-      display: none; text-align: center; font-weight: 700; font-size: 13.5px;
-      margin-top: 14px; background-color: #FDE28A; padding: 14px 16px; border-radius: 999px;
+      display: none;
+      text-align: center;
+      font-weight: 700;
+      font-size: 13.5px;
+      margin: 14px 0 0;
+      background-color: var(--accent-yellow);
+      padding: 14px 16px;
+      border-radius: 999px;
       animation: pulse 1.5s infinite ease-in-out;
     }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.65; } }
 
     .footer-pill { margin-top: 24px; text-align: center; }
     .footer-pill span {
-      display: inline-block; background-color: #F4B89B; color: #263B29;
-      font-size: 11px; font-weight: 700; padding: 6px 16px; border-radius: 999px;
+      display: inline-block;
+      background-color: var(--accent-peach);
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 999px;
+    }
+
+    /* REDUCED MOTION */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
 
     /* RESPONSIVE */
@@ -336,12 +534,11 @@
 </head>
 <body>
 
-  <!-- Container Toast Notification -->
   <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
   <header class="top-bar">
     <div class="brand">
-      <div class="brand-icon">✿</div>
+      <div class="brand-icon" aria-hidden="true">✿</div>
       <div class="brand-text">
         <span class="brand-title">REBLOOM</span>
         <span class="brand-sub">Old Things. New Stories.</span>
@@ -354,49 +551,55 @@
     </div>
   </header>
 
-  <div class="switcher-wrap">
+  <nav class="switcher-wrap" aria-label="Pilih mode formulir">
     <div class="pill-switcher" role="tablist">
-      <button type="button" role="tab" aria-selected="true" class="switch-btn active" id="tabShare" onclick="switchMode('share')">✨ Share Creation</button>
-      <button type="button" role="tab" aria-selected="false" class="switch-btn" id="tabSell" onclick="switchMode('sell')">🏷️ Sell Your Creation</button>
+      <button type="button" role="tab" aria-selected="true" aria-controls="shareForm" class="switch-btn active" id="tabShare" data-mode="share">✨ Share Creation</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="sellForm" class="switch-btn" id="tabSell" data-mode="sell">🏷️ Sell Your Creation</button>
     </div>
-  </div>
+  </nav>
 
-  <div class="container">
+  <main class="container">
     <!-- FORM 1: SHARE -->
     <form id="shareForm" class="form-card" data-sheet="Sheet1">
       <span class="sparkle" aria-hidden="true">✳</span>
       <div class="badge">✦ Make Something Magical ✦</div>
-      <h3>Share Your Creation</h3>
+      <h1>Share Your Creation</h1>
       <p class="subtitle">Ubah barang bekas jadi karya bermakna. Bagikan hasil kreasimu ke galeri REBLOOM!</p>
 
       <div class="field-group">
-        <label><span class="dot">✦</span> Nama Pembuat</label>
-        <input type="text" name="nama" placeholder="Masukkan nama kamu..." required>
+        <label for="shareNama"><span class="dot" aria-hidden="true">✦</span> Nama Pembuat</label>
+        <input id="shareNama" type="text" name="nama" placeholder="Masukkan nama kamu..." autocomplete="name" required>
       </div>
       <div class="field-group">
-        <label><span class="dot">✦</span> Judul Kreasi</label>
-        <input type="text" name="judul" placeholder="Contoh: Gantungan Kunci 3D Print..." required>
+        <label for="shareJudul"><span class="dot" aria-hidden="true">✦</span> Judul Kreasi</label>
+        <input id="shareJudul" type="text" name="judul" placeholder="Contoh: Gantungan Kunci 3D Print..." required>
       </div>
       <div class="field-group">
-        <label><span class="dot">✦</span> Bahan yang Kamu Gunakan</label>
-        <input type="text" name="bahan" placeholder="Botol plastik, kardus, kain flanel..." required>
+        <label for="shareBahan"><span class="dot" aria-hidden="true">✦</span> Bahan yang Kamu Gunakan</label>
+        <input id="shareBahan" type="text" name="bahan" placeholder="Botol plastik, kardus, kain flanel..." required>
       </div>
       <div class="field-group">
-        <label><span class="dot">✦</span> Cerita di Balik Karyamu</label>
-        <textarea name="cerita" placeholder="Ceritakan proses pembuatannya ya aku penasaran..." required></textarea>
+        <label for="shareCerita"><span class="dot" aria-hidden="true">✦</span> Cerita di Balik Karyamu</label>
+        <textarea id="shareCerita" name="cerita" placeholder="Ceritakan proses pembuatannya ya aku penasaran..." required></textarea>
       </div>
-      <div class="field-group" style="margin-bottom: 0;">
-        <label><span class="dot">✦</span> Foto Hasil Kreasi (Maks 10MB)</label>
+      <div class="field-group no-margin">
+        <label for="shareFile"><span class="dot" aria-hidden="true">✦</span> Foto Hasil Kreasi (Maks 10MB)</label>
         <div class="file-upload-box">
-          <input type="file" name="fileInput" accept="image/jpeg,image/png,image/webp" required>
-          <span class="upload-icon">📸</span>
+          <input id="shareFile" type="file" name="fileInput" accept="image/jpeg,image/png,image/webp" required>
+          <span class="upload-icon" aria-hidden="true">📸</span>
           <span class="upload-text" data-default="Klik atau seret foto karyamu ke sini">Klik atau seret foto karyamu ke sini</span>
           <span class="upload-hint">Format JPG, PNG, atau WEBP</span>
-          <div class="preview-box"><img src="" alt="Preview"></div>
+          <div class="preview-box">
+            <img src="" alt="Preview foto kreasi">
+            <div class="preview-meta">
+              <span class="file-size-label"></span>
+              <button type="button" class="remove-file-btn" aria-label="Hapus foto terpilih">✕ Ganti</button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <button type="submit" class="submit-btn">Kirim Karyamu <span>→</span></button>
+      <button type="submit" class="submit-btn">Kirim Karyamu <span aria-hidden="true">→</span></button>
       <p class="loading" role="status">⏳ Mengoptimalkan & mengunggah karya ke galeri...</p>
     </form>
 
@@ -404,27 +607,27 @@
     <form id="sellForm" class="form-card hidden" data-sheet="Marketplace">
       <span class="sparkle" aria-hidden="true">✳</span>
       <div class="badge pink">✦ REBLOOM Marketplace ✦</div>
-      <h3>Sell Your Creation +</h3>
+      <h1>Sell Your Creation +</h1>
       <p class="subtitle">Ceritakan harta daur ulang yang ingin Anda jual. Pembeli akan menghubungi penjual untuk mengatur pembelian.</p>
 
       <div class="row-2">
         <div class="field-group">
-          <label><span class="dot">✦</span> Nama penjual</label>
-          <input type="text" name="namaPenjual" placeholder="Nama / Kelompok..." required>
+          <label for="sellNamaPenjual"><span class="dot" aria-hidden="true">✦</span> Nama penjual</label>
+          <input id="sellNamaPenjual" type="text" name="namaPenjual" placeholder="Nama / Kelompok..." autocomplete="name" required>
         </div>
         <div class="field-group">
-          <label><span class="dot">✦</span> Nama produk</label>
-          <input type="text" name="namaProduk" placeholder="Contoh: EcoPot Berry..." required>
+          <label for="sellNamaProduk"><span class="dot" aria-hidden="true">✦</span> Nama produk</label>
+          <input id="sellNamaProduk" type="text" name="namaProduk" placeholder="Contoh: EcoPot Berry..." required>
         </div>
       </div>
       <div class="row-2">
         <div class="field-group">
-          <label><span class="dot">✦</span> Harga produk</label>
-          <input type="text" name="harga" placeholder="misalnya Rp 45.000" required>
+          <label for="sellHarga"><span class="dot" aria-hidden="true">✦</span> Harga produk</label>
+          <input id="sellHarga" type="text" name="harga" placeholder="misalnya Rp 45.000" required>
         </div>
         <div class="field-group">
-          <label><span class="dot">✦</span> Kategori produk</label>
-          <select name="kategori" required>
+          <label for="sellKategori"><span class="dot" aria-hidden="true">✦</span> Kategori produk</label>
+          <select id="sellKategori" name="kategori" required>
             <option value="" disabled selected>Pilih kategori</option>
             <option value="Plastic">Plastic</option>
             <option value="Fabric">Fabric</option>
@@ -435,47 +638,52 @@
         </div>
       </div>
       <div class="field-group">
-        <label><span class="dot">✦</span> Deskripsi produk</label>
-        <textarea name="deskripsi" placeholder="Jelaskan kegunaan dan keunikan produkmu..." required></textarea>
+        <label for="sellDeskripsi"><span class="dot" aria-hidden="true">✦</span> Deskripsi produk</label>
+        <textarea id="sellDeskripsi" name="deskripsi" placeholder="Jelaskan kegunaan dan keunikan produkmu..." required></textarea>
       </div>
       <div class="field-group">
-        <label><span class="dot">✦</span> Bahan yang digunakan</label>
-        <input type="text" name="bahan" placeholder="Contoh: Galon bekas, cat kayu..." required>
+        <label for="sellBahan"><span class="dot" aria-hidden="true">✦</span> Bahan yang digunakan</label>
+        <input id="sellBahan" type="text" name="bahan" placeholder="Contoh: Galon bekas, cat kayu..." required>
       </div>
       <div class="field-group">
-        <label><span class="dot">✦</span> Informasi kontak publik</label>
-        <input type="text" name="kontak" placeholder="Email, IG, atau nomor WA..." required>
+        <label for="sellKontak"><span class="dot" aria-hidden="true">✦</span> Informasi kontak publik</label>
+        <input id="sellKontak" type="text" name="kontak" placeholder="Email, IG, atau nomor WA..." required>
         <div class="helper">Cantumkan hanya informasi kontak yang nyaman dibagikan secara publik.</div>
       </div>
-      <div class="field-group" style="margin-bottom: 0;">
-        <label><span class="dot">✦</span> Foto produk (Maks 10MB)</label>
+      <div class="field-group no-margin">
+        <label for="sellFile"><span class="dot" aria-hidden="true">✦</span> Foto produk (Maks 10MB)</label>
         <div class="file-upload-box">
-          <input type="file" name="fileInput" accept="image/jpeg,image/png,image/webp" required>
-          <span class="upload-icon">🛍️</span>
+          <input id="sellFile" type="file" name="fileInput" accept="image/jpeg,image/png,image/webp" required>
+          <span class="upload-icon" aria-hidden="true">🛍️</span>
           <span class="upload-text" data-default="Klik atau seret foto produk ke sini">Klik atau seret foto produk ke sini</span>
           <span class="upload-hint">Format JPG, PNG, atau WEBP</span>
-          <div class="preview-box"><img src="" alt="Preview"></div>
+          <div class="preview-box">
+            <img src="" alt="Preview foto produk">
+            <div class="preview-meta">
+              <span class="file-size-label"></span>
+              <button type="button" class="remove-file-btn" aria-label="Hapus foto terpilih">✕ Ganti</button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <button type="submit" class="submit-btn">Kirim Detail & Foto <span>→</span></button>
+      <button type="submit" class="submit-btn">Kirim Detail & Foto <span aria-hidden="true">→</span></button>
       <p class="loading" role="status">⏳ Mengoptimalkan & mendaftarkan produk...</p>
     </form>
 
     <div class="footer-pill"><span>from waste to wellness</span></div>
-  </div>
+  </main>
 
   <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxhuzcR0L2_xBdJqh1kalqfB6S6mGyjkyf16AM_05crtH9eNWBU2dAWcTzqf6OLxavk_w/exec';
-    const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10MB
-    const REQUEST_TIMEOUT_MS = 35000; // 35 detik
+    const MAX_FILE_BYTES = 10 * 1024 * 1024;
+    const REQUEST_TIMEOUT_MS = 35000;
 
-    // 0. Custom Toast Notification System
+    // 0. Toast Notification System
     function showToast({ type = 'success', title, message, duration = 4500 }) {
       const container = document.getElementById('toastContainer');
       if (!container) return;
 
-      // Batasi maksimal 3 toast tampil bersamaan agar layar tetap rapi
       if (container.children.length >= 3) {
         dismissToast(container.firstElementChild);
       }
@@ -485,7 +693,6 @@
       toast.setAttribute('role', 'alert');
 
       const icon = type === 'success' ? '🌿' : '⚠️';
-
       toast.innerHTML = `
         <div class="toast-icon" aria-hidden="true">${icon}</div>
         <div class="toast-body">
@@ -496,7 +703,6 @@
         <div class="toast-progress" style="animation-duration: ${duration}ms"></div>
       `;
 
-      // Gunakan textContent agar aman dari injeksi HTML
       toast.querySelector('.toast-title').textContent = title;
       toast.querySelector('.toast-msg').textContent = message;
 
@@ -528,50 +734,86 @@
       toast.addEventListener('animationend', () => toast.remove(), { once: true });
     }
 
-    // 1. Switcher Logika + Sinkronisasi URL
+    // 1. Switcher Logika + Keyboard Tabs + Sinkronisasi URL
+    const tabButtons = document.querySelectorAll('.switch-btn');
+
     function switchMode(mode) {
       const isSell = mode === 'sell';
       document.body.classList.toggle('mode-sell', isSell);
       document.getElementById('shareForm').classList.toggle('hidden', isSell);
       document.getElementById('sellForm').classList.toggle('hidden', !isSell);
 
-      const tabShare = document.getElementById('tabShare');
-      const tabSell = document.getElementById('tabSell');
-      tabShare.classList.toggle('active', !isSell);
-      tabSell.classList.toggle('active', isSell);
-      tabShare.setAttribute('aria-selected', String(!isSell));
-      tabSell.setAttribute('aria-selected', String(isSell));
+      tabButtons.forEach(btn => {
+        const active = btn.dataset.mode === mode;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-selected', String(active));
+      });
 
       const url = new URL(window.location);
       isSell ? url.searchParams.set('tab', 'sell') : url.searchParams.delete('tab');
       window.history.replaceState({}, '', url);
     }
 
+    tabButtons.forEach((btn, idx) => {
+      btn.addEventListener('click', () => switchMode(btn.dataset.mode));
+      btn.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const nextIdx = (idx + (e.key === 'ArrowRight' ? 1 : -1) + tabButtons.length) % tabButtons.length;
+          tabButtons[nextIdx].focus();
+          switchMode(tabButtons[nextIdx].dataset.mode);
+        }
+      });
+    });
+
     if (new URLSearchParams(window.location.search).get('tab') === 'sell') {
       switchMode('sell');
     }
 
-    // Helper: Reset tampilan kotak upload & bersihkan memori ObjectURL
+    // Auto-format harga jika user hanya mengetik angka polos
+    const hargaInput = document.getElementById('sellHarga');
+    if (hargaInput) {
+      hargaInput.addEventListener('blur', () => {
+        const raw = hargaInput.value.trim();
+        if (/^\d+$/.test(raw)) {
+          hargaInput.value = 'Rp ' + Number(raw).toLocaleString('id-ID');
+        }
+      });
+    }
+
+    // Helper: Format ukuran file
+    function formatBytes(bytes) {
+      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    }
+
+    // Helper: Reset kotak upload & bersihkan memori ObjectURL
     function resetUploadBox(container) {
+      const input = container.querySelector('input[type="file"]');
       const textLabel = container.querySelector('.upload-text');
       const previewBox = container.querySelector('.preview-box');
       const img = previewBox.querySelector('img');
+      const sizeLabel = previewBox.querySelector('.file-size-label');
 
       if (img.dataset.objectUrl) {
         URL.revokeObjectURL(img.dataset.objectUrl);
         delete img.dataset.objectUrl;
       }
+      input.value = '';
       img.removeAttribute('src');
+      sizeLabel.textContent = '';
       textLabel.textContent = textLabel.dataset.default;
       previewBox.style.display = 'none';
     }
 
-    // 2. Setup Preview Instan & Drag-and-Drop
+    // 2. Setup Preview Instan, Drag-and-Drop & Tombol Hapus Foto
     document.querySelectorAll('.file-upload-box').forEach(box => {
       const input = box.querySelector('input[type="file"]');
       const textLabel = box.querySelector('.upload-text');
       const previewBox = box.querySelector('.preview-box');
       const img = previewBox.querySelector('img');
+      const sizeLabel = previewBox.querySelector('.file-size-label');
+      const removeBtn = previewBox.querySelector('.remove-file-btn');
 
       ['dragenter', 'dragover'].forEach(evt => {
         box.addEventListener(evt, e => {
@@ -594,6 +836,12 @@
         }
       });
 
+      removeBtn.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        resetUploadBox(box);
+      });
+
       input.addEventListener('change', function() {
         const file = this.files[0];
         if (!file) {
@@ -607,7 +855,6 @@
             title: 'Format File Tidak Didukung',
             message: 'Pilih file gambar berformat JPG, PNG, atau WEBP ya.'
           });
-          this.value = '';
           resetUploadBox(box);
           return;
         }
@@ -618,7 +865,6 @@
             title: 'Ukuran Foto Terlalu Besar',
             message: 'Maksimal ukuran file adalah 10MB. Coba pilih foto lain ya.'
           });
-          this.value = '';
           resetUploadBox(box);
           return;
         }
@@ -631,11 +877,12 @@
         img.dataset.objectUrl = objectUrl;
         img.src = objectUrl;
         textLabel.textContent = file.name;
+        sizeLabel.textContent = formatBytes(file.size);
         previewBox.style.display = 'block';
       });
     });
 
-    // Helper: Kompres & Resize gambar di sisi klien
+    // Helper: Kompres & Resize gambar di sisi klien (aman untuk PNG transparan)
     function prepareImagePayload(file, maxDimension = 1280, quality = 0.82) {
       return new Promise((resolve, reject) => {
         const objectUrl = URL.createObjectURL(file);
@@ -660,9 +907,17 @@
           canvas.height = height;
 
           const ctx = canvas.getContext('2d');
-          ctx.drawImage(image, 0, 0, width, height);
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
 
           const outputMime = (file.type === 'image/png' && file.size < 400 * 1024) ? 'image/png' : 'image/jpeg';
+          if (outputMime === 'image/jpeg') {
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, width, height);
+          }
+
+          ctx.drawImage(image, 0, 0, width, height);
+
           const dataUrl = canvas.toDataURL(outputMime, quality);
           const base64Data = dataUrl.split(',')[1];
           const cleanName = outputMime === 'image/jpeg'
@@ -685,13 +940,33 @@
       });
     }
 
-    // 3. Logika Submit dengan Timeout & Anti Double-Submit
+    function setFormControlsDisabled(form, disabled) {
+      form.querySelectorAll('input, select, textarea, button').forEach(el => {
+        el.disabled = disabled;
+      });
+    }
+
+    const handleBeforeUnload = e => {
+      e.preventDefault();
+      e.returnValue = '';
+    };
+
+    // 3. Logika Submit dengan Timeout, Offline Check & Anti Double-Submit
     document.querySelectorAll('form').forEach(form => {
       let isSubmitting = false;
 
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
         if (isSubmitting) return;
+
+        if (!navigator.onLine) {
+          showToast({
+            type: 'error',
+            title: 'Tidak Ada Koneksi Internet',
+            message: 'Periksa jaringan Wi-Fi atau data selulermu lalu coba lagi.'
+          });
+          return;
+        }
 
         const btn = this.querySelector('.submit-btn');
         const load = this.querySelector('.loading');
@@ -711,6 +986,7 @@
         isSubmitting = true;
         btn.style.display = 'none';
         load.style.display = 'block';
+        window.addEventListener('beforeunload', handleBeforeUnload);
 
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
@@ -731,6 +1007,8 @@
           params.append('fileData', compressed.fileData);
           params.append('fileName', compressed.fileName);
           params.append('mimeType', compressed.mimeType);
+
+          setFormControlsDisabled(this, true);
 
           const response = await fetch(SCRIPT_URL, {
             method: 'POST',
@@ -779,6 +1057,8 @@
           }
         } finally {
           clearTimeout(timeoutId);
+          window.removeEventListener('beforeunload', handleBeforeUnload);
+          setFormControlsDisabled(this, false);
           isSubmitting = false;
           btn.style.display = 'flex';
           load.style.display = 'none';
